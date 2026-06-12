@@ -1,10 +1,10 @@
-# dbd-seguimiento-proyectos
+# Hito
 
-**Sistema de Seguimiento de Proyectos** — curso Diseño de Bases de Datos, 2023-1 · Grupo 5
+**Sistema de seguimiento de proyectos** — curso Diseño de Bases de Datos, 2023-1
 
 > 🧪 **Maqueta académica (2023).** Proyecto del curso *Diseño de Bases de Datos*, conservado como repo de muestra de mi evolución. El código se mantiene tal como se escribió en el curso; solo se agregaron los arreglos mínimos para poder desplegarlo como demo estática de solo visualización.
 
-Aplicación web para el seguimiento de proyectos de una consultora: proyectos, tareas (tablero por estado), reuniones, objetivos/hitos, presupuestos → partidas → gastos, asignación de empleados y recursos, y reportes gerenciales. Incluyó además un comparativo de rendimiento entre PostgreSQL y Cassandra para la monografía del curso.
+Aplicación web para el seguimiento de proyectos de **Tech Innovation**, una consultora ficticia (suya es la marca del logo): proyectos, tareas (tablero por estado), reuniones, objetivos/hitos, presupuestos → partidas → gastos, asignación de empleados y recursos, y reportes gerenciales. Incluyó además un comparativo de rendimiento entre PostgreSQL y Cassandra para la monografía del curso.
 
 ## Stack (2023)
 

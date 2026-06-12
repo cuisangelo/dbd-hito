@@ -8,3 +8,4 @@ npm-debug.log*
 # regenerable benchmark datasets (monografia/scripts_csv)
 monografia/datos_dbd/*-100k.csv
 monografia/datos_dbd/*-1M.csv
+.vercel

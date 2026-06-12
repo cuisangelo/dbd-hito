@@ -1,4 +1,6 @@
-# Sistema de Seguimiento de Proyectos — DBD 2023-1 · Grupo 5
+# dbd-seguimiento-proyectos
+
+**Sistema de Seguimiento de Proyectos** — curso Diseño de Bases de Datos, 2023-1 · Grupo 5
 
 > 🧪 **Maqueta académica (2023).** Proyecto del curso *Diseño de Bases de Datos*, conservado como repo de muestra de mi evolución. El código se mantiene tal como se escribió en el curso; solo se agregaron los arreglos mínimos para poder desplegarlo como demo estática de solo visualización.
 

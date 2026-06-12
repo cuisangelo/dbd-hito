@@ -9,9 +9,10 @@ export const proyectos = [
     fecha_finalizacion_estimada: "2023-07-15",
     nombre_proyecto: "Sistema de Gestión de Inventarios",
     descripcion_proyecto:
-      "Implementación de un sistema web para el control de inventarios y almacenes de Comercial Andina.",
+      "Sistema web para el control de inventarios y almacenes de Comercial Andina.",
     estado_proyecto: 2,
     nombre_cliente: "Comercial Andina S.A.C.",
+    jefe_proyecto: "Luis Rodríguez",
   },
   {
     proyecto_id: 2,
@@ -19,9 +20,10 @@ export const proyectos = [
     fecha_finalizacion_estimada: "2023-08-30",
     nombre_proyecto: "Plataforma de Ventas Online",
     descripcion_proyecto:
-      "Desarrollo de una tienda virtual con pasarela de pagos y panel administrativo.",
+      "Tienda virtual con pasarela de pagos y panel administrativo.",
     estado_proyecto: 1,
     nombre_cliente: "Retail Express E.I.R.L.",
+    jefe_proyecto: "María Torres",
   },
   {
     proyecto_id: 3,
@@ -32,6 +34,40 @@ export const proyectos = [
       "Migración del core transaccional desde Oracle hacia PostgreSQL con réplicas de lectura.",
     estado_proyecto: 3,
     nombre_cliente: "Banco del Sur",
+    jefe_proyecto: "Carla Mendoza",
+  },
+  {
+    proyecto_id: 4,
+    fecha_creacion: "2023-01-09",
+    fecha_finalizacion_estimada: "2023-05-31",
+    nombre_proyecto: "App de Reparto a Domicilio",
+    descripcion_proyecto:
+      "Aplicación móvil de pedidos y tracking de reparto para cadena de restaurantes.",
+    estado_proyecto: 3,
+    nombre_cliente: "Sabores del Perú S.A.",
+    jefe_proyecto: "Luis Rodríguez",
+  },
+  {
+    proyecto_id: 5,
+    fecha_creacion: "2023-05-02",
+    fecha_finalizacion_estimada: "2023-09-29",
+    nombre_proyecto: "Portal de Atención al Cliente",
+    descripcion_proyecto:
+      "Portal de autoservicio con gestión de tickets y base de conocimiento.",
+    estado_proyecto: 1,
+    nombre_cliente: "Seguros Pacífico Norte",
+    jefe_proyecto: "Jorge Quispe",
+  },
+  {
+    proyecto_id: 6,
+    fecha_creacion: "2023-05-22",
+    fecha_finalizacion_estimada: "2023-10-20",
+    nombre_proyecto: "Dashboard de Indicadores Logísticos",
+    descripcion_proyecto:
+      "Tablero gerencial con KPIs de flota, rutas y tiempos de entrega.",
+    estado_proyecto: 2,
+    nombre_cliente: "Transportes Unidos del Centro",
+    jefe_proyecto: "María Torres",
   },
 ];
 
@@ -44,7 +80,7 @@ export const detallesProyecto = {
       fecha_creacion: "2023-03-01",
       fecha_finalizacion_estimada: "2023-07-15",
       descripcion_proyecto:
-        "Implementación de un sistema web para el control de inventarios y almacenes de Comercial Andina.",
+        "Sistema web para el control de inventarios y almacenes de Comercial Andina.",
       jefe_proyecto: "Luis Rodríguez",
     },
   ],
@@ -52,18 +88,22 @@ export const detallesProyecto = {
     { desarrolladores: "María Torres" },
     { desarrolladores: "Jorge Quispe" },
     { desarrolladores: "Ana Castillo" },
+    { desarrolladores: "Pedro Salas" },
   ],
   hardware: [
     { recurso_hardware: "Laptop Dell Latitude 5530" },
     { recurso_hardware: "Servidor HP ProLiant" },
+    { recurso_hardware: "Monitor LG 27''" },
   ],
   software: [
     { recurso_software: "Licencia IntelliJ IDEA" },
     { recurso_software: "PostgreSQL 15" },
+    { recurso_software: "Licencia Figma" },
   ],
   adjuntos: [
     { nombre_adjunto: "acta-constitucion.pdf", adjunto_link: "#" },
     { nombre_adjunto: "cronograma-v2.xlsx", adjunto_link: "#" },
+    { nombre_adjunto: "modelo-er.png", adjunto_link: "#" },
   ],
 };
 
@@ -96,6 +136,32 @@ export const tareas = [
   },
   {
     tarea_id: 3,
+    nombre_tarea: "Cargar catálogo inicial de productos",
+    descripcion_tarea:
+      "Importar el maestro de productos del cliente y validar duplicados.",
+    fecha_hora: "2023-04-28 18:00:00",
+    estado_tarea: 3,
+    fecha_creacion: "2023-04-03 - 09:00:00",
+    fecha_entrega: "2023-04-28 - 18:00:00",
+    fecha_realizada_tarea: "2023-04-26",
+    hora_realizada_tarea: "15:10:00",
+    jefe_proyecto: "Luis Rodríguez",
+  },
+  {
+    tarea_id: 4,
+    nombre_tarea: "Definir roles y permisos",
+    descripcion_tarea:
+      "Matriz de roles (almacenero, supervisor, gerencia) y accesos por módulo.",
+    fecha_hora: "2023-05-05 18:00:00",
+    estado_tarea: 3,
+    fecha_creacion: "2023-04-10 - 10:00:00",
+    fecha_entrega: "2023-05-05 - 18:00:00",
+    fecha_realizada_tarea: "2023-05-04",
+    hora_realizada_tarea: "12:30:00",
+    jefe_proyecto: "Luis Rodríguez",
+  },
+  {
+    tarea_id: 5,
     nombre_tarea: "Implementar API de inventario",
     descripcion_tarea:
       "Endpoints REST para productos, almacenes y movimientos de stock.",
@@ -108,7 +174,7 @@ export const tareas = [
     jefe_proyecto: "Luis Rodríguez",
   },
   {
-    tarea_id: 4,
+    tarea_id: 6,
     nombre_tarea: "Maquetar vista de almacenes",
     descripcion_tarea: "Pantallas de listado y detalle de almacenes con MUI.",
     fecha_hora: "2023-07-07 18:00:00",
@@ -120,7 +186,33 @@ export const tareas = [
     jefe_proyecto: "Luis Rodríguez",
   },
   {
-    tarea_id: 5,
+    tarea_id: 7,
+    nombre_tarea: "Integrar lector de códigos de barras",
+    descripcion_tarea:
+      "Captura de movimientos de stock con pistola lectora en almacén.",
+    fecha_hora: "2023-07-05 18:00:00",
+    estado_tarea: 2,
+    fecha_creacion: "2023-05-22 - 09:00:00",
+    fecha_entrega: "2023-07-05 - 18:00:00",
+    fecha_realizada_tarea: null,
+    hora_realizada_tarea: null,
+    jefe_proyecto: "Luis Rodríguez",
+  },
+  {
+    tarea_id: 8,
+    nombre_tarea: "Pruebas de carga del módulo de stock",
+    descripcion_tarea:
+      "Simular 500 usuarios concurrentes registrando movimientos.",
+    fecha_hora: "2023-07-08 18:00:00",
+    estado_tarea: 2,
+    fecha_creacion: "2023-06-01 - 11:00:00",
+    fecha_entrega: "2023-07-08 - 18:00:00",
+    fecha_realizada_tarea: null,
+    hora_realizada_tarea: null,
+    jefe_proyecto: "Luis Rodríguez",
+  },
+  {
+    tarea_id: 9,
     nombre_tarea: "Diseñar módulo de reportes",
     descripcion_tarea:
       "Definir reportes de rotación de stock y valorización de inventario.",
@@ -133,7 +225,7 @@ export const tareas = [
     jefe_proyecto: "Luis Rodríguez",
   },
   {
-    tarea_id: 6,
+    tarea_id: 10,
     nombre_tarea: "Configurar respaldos automáticos",
     descripcion_tarea: "Backups diarios con retención de 30 días.",
     fecha_hora: "2023-07-14 18:00:00",
@@ -144,15 +236,47 @@ export const tareas = [
     hora_realizada_tarea: null,
     jefe_proyecto: "Luis Rodríguez",
   },
+  {
+    tarea_id: 11,
+    nombre_tarea: "Capacitación a usuarios de almacén",
+    descripcion_tarea:
+      "Sesiones presenciales con el equipo de Comercial Andina.",
+    fecha_hora: "2023-07-13 15:00:00",
+    estado_tarea: 1,
+    fecha_creacion: "2023-06-12 - 09:00:00",
+    fecha_entrega: "2023-07-13 - 15:00:00",
+    fecha_realizada_tarea: null,
+    hora_realizada_tarea: null,
+    jefe_proyecto: "Luis Rodríguez",
+  },
+  {
+    tarea_id: 12,
+    nombre_tarea: "Documentar manual de operación",
+    descripcion_tarea:
+      "Manual de usuario y guía de resolución de incidencias frecuentes.",
+    fecha_hora: "2023-07-15 12:00:00",
+    estado_tarea: 1,
+    fecha_creacion: "2023-06-15 - 10:00:00",
+    fecha_entrega: "2023-07-15 - 12:00:00",
+    fecha_realizada_tarea: null,
+    hora_realizada_tarea: null,
+    jefe_proyecto: "Luis Rodríguez",
+  },
 ];
 
 export const encargadosPorTarea = [
   { tarea_id: 1, encargado: "Ana Castillo" },
   { tarea_id: 2, encargado: "María Torres" },
-  { tarea_id: 3, encargado: "María Torres" },
-  { tarea_id: 4, encargado: "Jorge Quispe" },
-  { tarea_id: 5, encargado: "Ana Castillo" },
-  { tarea_id: 6, encargado: "María Torres" },
+  { tarea_id: 3, encargado: "Ana Castillo" },
+  { tarea_id: 4, encargado: "Luis Rodríguez" },
+  { tarea_id: 5, encargado: "María Torres" },
+  { tarea_id: 6, encargado: "Jorge Quispe" },
+  { tarea_id: 7, encargado: "Pedro Salas" },
+  { tarea_id: 8, encargado: "Pedro Salas" },
+  { tarea_id: 9, encargado: "Ana Castillo" },
+  { tarea_id: 10, encargado: "Carla Mendoza" },
+  { tarea_id: 11, encargado: "Jorge Quispe" },
+  { tarea_id: 12, encargado: "María Torres" },
 ];
 
 export const reuniones = [
@@ -161,8 +285,16 @@ export const reuniones = [
     descripcion_reunion: "Kickoff del proyecto con el cliente",
   },
   {
+    dia_hora: "2023-04-03 10:00:00",
+    descripcion_reunion: "Revisión del modelo de datos con el área de almacén",
+  },
+  {
     dia_hora: "2023-05-08 10:00:00",
     descripcion_reunion: "Revisión del sprint 3 y demo de avances",
+  },
+  {
+    dia_hora: "2023-06-05 16:00:00",
+    descripcion_reunion: "Comité de seguimiento: riesgos y presupuesto",
   },
   {
     dia_hora: "2023-06-19 15:30:00",
@@ -175,6 +307,8 @@ export const empleadosProyecto = [
   { usuario_id: 2, empleado: "María Torres" },
   { usuario_id: 3, empleado: "Jorge Quispe" },
   { usuario_id: 4, empleado: "Ana Castillo" },
+  { usuario_id: 5, empleado: "Pedro Salas" },
+  { usuario_id: 6, empleado: "Carla Mendoza" },
 ];
 
 export const asignacionesEmpleados = [
@@ -196,22 +330,41 @@ export const asignacionesEmpleados = [
     horas_asignadas_trabajo: 80,
     especialidad: "Análisis de datos",
   },
-];
-
-export const empleadosDisponibles = [
   {
     empleado_id: 5,
     concat: "Pedro Salas",
+    horas_asignadas_trabajo: 60,
     especialidad: "QA",
-    total_horas_disponibles: 160,
-    salario_hora: 35,
   },
   {
     empleado_id: 6,
     concat: "Carla Mendoza",
+    horas_asignadas_trabajo: 40,
     especialidad: "DBA",
+  },
+];
+
+export const empleadosDisponibles = [
+  {
+    empleado_id: 7,
+    concat: "Diego Fernández",
+    especialidad: "DevOps",
     total_horas_disponibles: 160,
-    salario_hora: 45,
+    salario_hora: 40,
+  },
+  {
+    empleado_id: 8,
+    concat: "Lucía Paredes",
+    especialidad: "UX/UI",
+    total_horas_disponibles: 120,
+    salario_hora: 38,
+  },
+  {
+    empleado_id: 9,
+    concat: "Renato Vargas",
+    especialidad: "Mobile",
+    total_horas_disponibles: 160,
+    salario_hora: 42,
   },
 ];
 
@@ -234,27 +387,51 @@ export const asignacionesRecursos = [
     tipo_recurso: 2,
     cantidad_asignada: 5,
   },
-];
-
-export const recursosDisponibles = [
   {
     recurso_id: 4,
     nombre: "Monitor LG 27''",
     tipo_recurso: 1,
-    cantidad_disponible: 6,
+    cantidad_asignada: 6,
   },
   {
     recurso_id: 5,
+    nombre: "Pistola lectora Zebra DS2208",
+    tipo_recurso: 1,
+    cantidad_asignada: 3,
+  },
+];
+
+export const recursosDisponibles = [
+  {
+    recurso_id: 6,
     nombre: "Licencia Figma",
     tipo_recurso: 2,
     cantidad_disponible: 10,
+  },
+  {
+    recurso_id: 7,
+    nombre: "Tablet Samsung Galaxy Tab A8",
+    tipo_recurso: 1,
+    cantidad_disponible: 4,
+  },
+  {
+    recurso_id: 8,
+    nombre: "Licencia Postman Enterprise",
+    tipo_recurso: 2,
+    cantidad_disponible: 8,
+  },
+  {
+    recurso_id: 9,
+    nombre: "Impresora de etiquetas Zebra ZD421",
+    tipo_recurso: 1,
+    cantidad_disponible: 2,
   },
 ];
 
 export const presupuestos = [
   {
     presupuesto_id: 1,
-    descripcion_presupuesto: "Presupuesto general 2023",
+    descripcion_presupuesto: "Presupuesto general — Inventarios",
     fecha_creacion_presupuesto: "2023-03-05",
     monto_presupuesto: 45000,
     divisa_presupuesto: "PEN",
@@ -281,6 +458,36 @@ export const presupuestos = [
     porcentaje_usado: 90,
     estado_presupuesto: 2,
     proyecto_id: 3,
+  },
+  {
+    presupuesto_id: 4,
+    descripcion_presupuesto: "Presupuesto app de reparto",
+    fecha_creacion_presupuesto: "2023-01-15",
+    monto_presupuesto: 60000,
+    divisa_presupuesto: "PEN",
+    porcentaje_usado: 97,
+    estado_presupuesto: 2,
+    proyecto_id: 4,
+  },
+  {
+    presupuesto_id: 5,
+    descripcion_presupuesto: "Presupuesto portal de atención",
+    fecha_creacion_presupuesto: "2023-05-05",
+    monto_presupuesto: 52000,
+    divisa_presupuesto: "PEN",
+    porcentaje_usado: 12,
+    estado_presupuesto: 1,
+    proyecto_id: 5,
+  },
+  {
+    presupuesto_id: 6,
+    descripcion_presupuesto: "Presupuesto dashboard logístico",
+    fecha_creacion_presupuesto: "2023-05-25",
+    monto_presupuesto: 38000,
+    divisa_presupuesto: "PEN",
+    porcentaje_usado: 22,
+    estado_presupuesto: 1,
+    proyecto_id: 6,
   },
 ];
 
@@ -309,6 +516,16 @@ export const partidas = [
     partida_id: 3,
     estado_partida: 1,
     divisa: "PEN",
+    descripcion: "Equipamiento de almacén",
+    monto: 8000,
+    fecha_estimacion: "2023-04-20",
+    presupuesto_id: 1,
+    tipo_partida: 2,
+  },
+  {
+    partida_id: 4,
+    estado_partida: 1,
+    divisa: "PEN",
     descripcion: "Servicios cloud",
     monto: 9000,
     fecha_estimacion: "2023-04-15",
@@ -316,13 +533,43 @@ export const partidas = [
     tipo_partida: 3,
   },
   {
-    partida_id: 4,
+    partida_id: 5,
+    estado_partida: 1,
+    divisa: "PEN",
+    descripcion: "Pasarela de pagos — integración",
+    monto: 14000,
+    fecha_estimacion: "2023-05-10",
+    presupuesto_id: 2,
+    tipo_partida: 3,
+  },
+  {
+    partida_id: 6,
     estado_partida: 2,
     divisa: "PEN",
     descripcion: "Consultoría externa",
     monto: 15000,
     fecha_estimacion: "2023-02-25",
     presupuesto_id: 3,
+    tipo_partida: 3,
+  },
+  {
+    partida_id: 7,
+    estado_partida: 2,
+    divisa: "PEN",
+    descripcion: "Infraestructura de pruebas",
+    monto: 7000,
+    fecha_estimacion: "2023-03-05",
+    presupuesto_id: 3,
+    tipo_partida: 2,
+  },
+  {
+    partida_id: 8,
+    estado_partida: 1,
+    divisa: "PEN",
+    descripcion: "Capacitación y soporte",
+    monto: 6000,
+    fecha_estimacion: "2023-06-01",
+    presupuesto_id: 1,
     tipo_partida: 3,
   },
 ];
@@ -338,35 +585,91 @@ export const gastos = [
   },
   {
     gasto_id: 2,
-    descripcion: "Laptop Dell Latitude 5530",
+    descripcion: "Licencia PostgreSQL soporte empresarial",
+    monto: 3200,
+    fecha: "2023-04-05",
+    divisa: "PEN",
+    partida_id: 1,
+  },
+  {
+    gasto_id: 3,
+    descripcion: "Laptop Dell Latitude 5530 (x4)",
     monto: 5200,
     fecha: "2023-03-22",
     divisa: "PEN",
     partida_id: 2,
   },
   {
-    gasto_id: 3,
-    descripcion: "Monitor LG 27''",
-    monto: 1100,
+    gasto_id: 4,
+    descripcion: "Monitor LG 27'' (x6)",
+    monto: 6600,
     fecha: "2023-03-22",
     divisa: "PEN",
     partida_id: 2,
   },
   {
-    gasto_id: 4,
-    descripcion: "AWS EC2 — abril",
-    monto: 850,
-    fecha: "2023-05-02",
+    gasto_id: 5,
+    descripcion: "Pistolas lectoras Zebra (x3)",
+    monto: 1950,
+    fecha: "2023-05-12",
     divisa: "PEN",
     partida_id: 3,
   },
   {
-    gasto_id: 5,
+    gasto_id: 6,
+    descripcion: "Impresora de etiquetas Zebra",
+    monto: 1400,
+    fecha: "2023-05-18",
+    divisa: "PEN",
+    partida_id: 3,
+  },
+  {
+    gasto_id: 7,
+    descripcion: "AWS EC2 + RDS — abril",
+    monto: 850,
+    fecha: "2023-05-02",
+    divisa: "PEN",
+    partida_id: 4,
+  },
+  {
+    gasto_id: 8,
+    descripcion: "AWS EC2 + RDS — mayo",
+    monto: 920,
+    fecha: "2023-06-02",
+    divisa: "PEN",
+    partida_id: 4,
+  },
+  {
+    gasto_id: 9,
+    descripcion: "Setup pasarela Niubiz",
+    monto: 5500,
+    fecha: "2023-05-20",
+    divisa: "PEN",
+    partida_id: 5,
+  },
+  {
+    gasto_id: 10,
     descripcion: "Consultor Cassandra (40 h)",
     monto: 6000,
     fecha: "2023-03-15",
     divisa: "PEN",
-    partida_id: 4,
+    partida_id: 6,
+  },
+  {
+    gasto_id: 11,
+    descripcion: "Servidor de staging (3 meses)",
+    monto: 2100,
+    fecha: "2023-03-28",
+    divisa: "PEN",
+    partida_id: 7,
+  },
+  {
+    gasto_id: 12,
+    descripcion: "Taller de capacitación en almacén",
+    monto: 1800,
+    fecha: "2023-06-20",
+    divisa: "PEN",
+    partida_id: 8,
   },
 ];
 
@@ -383,14 +686,30 @@ export const reporteObjetivos = [
   },
   {
     ID: 2,
-    "Nombre del hito": "Desarrollo del núcleo",
-    "Descripcion del hito": "API de inventario y pantallas principales",
+    "Nombre del hito": "Núcleo de inventario",
+    "Descripcion del hito": "API de inventario, roles y carga de catálogo",
     "Fecha inicio del hito": "2023-04-16",
+    "Fecha final del hito": "2023-05-31",
+    Observacion: "Cerrado con 3 días de retraso",
+  },
+  {
+    ID: 3,
+    "Nombre del hito": "Integraciones de almacén",
+    "Descripcion del hito": "Lectores de código de barras e impresión de etiquetas",
+    "Fecha inicio del hito": "2023-06-01",
     "Fecha final del hito": "2023-06-30",
     Observacion: "En curso",
   },
   {
-    ID: 3,
+    ID: 4,
+    "Nombre del hito": "Reportes y analítica",
+    "Descripcion del hito": "Rotación de stock y valorización de inventario",
+    "Fecha inicio del hito": "2023-06-15",
+    "Fecha final del hito": "2023-07-10",
+    Observacion: "En curso",
+  },
+  {
+    ID: 5,
     "Nombre del hito": "Pruebas y despliegue",
     "Descripcion del hito": "QA, capacitación y puesta en producción",
     "Fecha inicio del hito": "2023-07-01",
@@ -403,9 +722,18 @@ export const reporteEmpxPro = [
   { Empleado: "María Torres", "Horas empleadas": 120 },
   { Empleado: "Jorge Quispe", "Horas empleadas": 100 },
   { Empleado: "Ana Castillo", "Horas empleadas": 80 },
+  { Empleado: "Pedro Salas", "Horas empleadas": 60 },
+  { Empleado: "Carla Mendoza", "Horas empleadas": 40 },
 ];
 
 export const reportePlanivsRepo = [
+  {
+    Proyecto: "App de Reparto a Domicilio",
+    "Fecha Inicio": "2023-01-09",
+    "Fecha fin estimada": "2023-05-31",
+    "Fecha fin": "2023-06-09",
+    "Horas empleadas": 680,
+  },
   {
     Proyecto: "Migración de Base de Datos",
     "Fecha Inicio": "2023-02-15",
@@ -418,7 +746,7 @@ export const reportePlanivsRepo = [
     "Fecha Inicio": "2023-03-01",
     "Fecha fin estimada": "2023-07-15",
     "Fecha fin": "2023-07-10",
-    "Horas empleadas": 300,
+    "Horas empleadas": 400,
   },
 ];
 
@@ -433,7 +761,25 @@ export const reporteTareas = [
     Estado: 3,
   },
   {
+    Tarea: 2,
+    Encargado: "María Torres",
+    "Fecha inicio": "2023-03-06",
+    "Fecha límite": "2023-03-20",
+    "Fecha fin": "2023-03-17",
+    Descripcion: "Preparar contenedores y scripts de carga inicial.",
+    Estado: 3,
+  },
+  {
     Tarea: 3,
+    Encargado: "Ana Castillo",
+    "Fecha inicio": "2023-04-03",
+    "Fecha límite": "2023-04-28",
+    "Fecha fin": "2023-04-26",
+    Descripcion: "Importar el maestro de productos y validar duplicados.",
+    Estado: 3,
+  },
+  {
+    Tarea: 5,
     Encargado: "María Torres",
     "Fecha inicio": "2023-05-02",
     "Fecha límite": "2023-06-30",
@@ -442,7 +788,16 @@ export const reporteTareas = [
     Estado: 2,
   },
   {
-    Tarea: 5,
+    Tarea: 7,
+    Encargado: "Pedro Salas",
+    "Fecha inicio": "2023-05-22",
+    "Fecha límite": "2023-07-05",
+    "Fecha fin": "—",
+    Descripcion: "Captura de movimientos con pistola lectora en almacén.",
+    Estado: 2,
+  },
+  {
+    Tarea: 9,
     Encargado: "Ana Castillo",
     "Fecha inicio": "2023-06-01",
     "Fecha límite": "2023-07-12",
@@ -480,20 +835,29 @@ export const reporteRecursos = [
     costo: 900,
     "Cant. disp.": 0,
   },
-];
-
-export const reporteSobrantes = [
   {
     id: 4,
     recurso: "Monitor LG 27''",
     tipo: "Hardware",
     proveedor: "LG Electronics",
-    "Cant. disp": 6,
-    costo: 1100,
-    "Cant.total": 8,
+    "Cant. asig.": 6,
+    costo: 6600,
+    "Cant. disp.": 2,
   },
   {
     id: 5,
+    recurso: "Pistola lectora Zebra DS2208",
+    tipo: "Hardware",
+    proveedor: "Zebra Technologies",
+    "Cant. asig.": 3,
+    costo: 1950,
+    "Cant. disp.": 1,
+  },
+];
+
+export const reporteSobrantes = [
+  {
+    id: 6,
     recurso: "Licencia Figma",
     tipo: "Software",
     proveedor: "Figma Inc.",
@@ -501,17 +865,44 @@ export const reporteSobrantes = [
     costo: 144,
     "Cant.total": 12,
   },
+  {
+    id: 7,
+    recurso: "Tablet Samsung Galaxy Tab A8",
+    tipo: "Hardware",
+    proveedor: "Samsung Perú",
+    "Cant. disp": 4,
+    costo: 750,
+    "Cant.total": 6,
+  },
+  {
+    id: 8,
+    recurso: "Licencia Postman Enterprise",
+    tipo: "Software",
+    proveedor: "Postman Inc.",
+    "Cant. disp": 8,
+    costo: 180,
+    "Cant.total": 10,
+  },
+  {
+    id: 9,
+    recurso: "Impresora de etiquetas Zebra ZD421",
+    tipo: "Hardware",
+    proveedor: "Zebra Technologies",
+    "Cant. disp": 2,
+    costo: 1400,
+    "Cant.total": 3,
+  },
 ];
 
 export const reporteProgreso = [
   {
     Proyecto: 1,
-    "Tot.reuniones": 3,
+    "Tot.reuniones": 5,
     "Tareas a tiempo(%)": 33,
     "Tareas a destiempo(%)": 33,
     "Tareas no entregadas(%)": 33,
     Presupuesto: 45000,
-    Gastos: 12000,
+    Gastos: 17650,
     "Fecha creación": "2023-03-01",
     "Fecha final est.": "2023-07-15",
     "Tiempo trans.(sem)": 15,
@@ -519,16 +910,68 @@ export const reporteProgreso = [
   },
   {
     Proyecto: 2,
-    "Tot.reuniones": 1,
+    "Tot.reuniones": 3,
     "Tareas a tiempo(%)": 60,
     "Tareas a destiempo(%)": 20,
     "Tareas no entregadas(%)": 20,
     Presupuesto: 80000,
-    Gastos: 9000,
+    Gastos: 14400,
     "Fecha creación": "2023-04-10",
     "Fecha final est.": "2023-08-30",
     "Tiempo trans.(sem)": 9,
     Estado: 1,
+  },
+  {
+    Proyecto: 3,
+    "Tot.reuniones": 6,
+    "Tareas a tiempo(%)": 75,
+    "Tareas a destiempo(%)": 25,
+    "Tareas no entregadas(%)": 0,
+    Presupuesto: 30000,
+    Gastos: 27000,
+    "Fecha creación": "2023-02-15",
+    "Fecha final est.": "2023-06-30",
+    "Tiempo trans.(sem)": 17,
+    Estado: 3,
+  },
+  {
+    Proyecto: 4,
+    "Tot.reuniones": 8,
+    "Tareas a tiempo(%)": 64,
+    "Tareas a destiempo(%)": 27,
+    "Tareas no entregadas(%)": 9,
+    Presupuesto: 60000,
+    Gastos: 58200,
+    "Fecha creación": "2023-01-09",
+    "Fecha final est.": "2023-05-31",
+    "Tiempo trans.(sem)": 22,
+    Estado: 3,
+  },
+  {
+    Proyecto: 5,
+    "Tot.reuniones": 2,
+    "Tareas a tiempo(%)": 50,
+    "Tareas a destiempo(%)": 0,
+    "Tareas no entregadas(%)": 50,
+    Presupuesto: 52000,
+    Gastos: 6240,
+    "Fecha creación": "2023-05-02",
+    "Fecha final est.": "2023-09-29",
+    "Tiempo trans.(sem)": 6,
+    Estado: 1,
+  },
+  {
+    Proyecto: 6,
+    "Tot.reuniones": 2,
+    "Tareas a tiempo(%)": 40,
+    "Tareas a destiempo(%)": 40,
+    "Tareas no entregadas(%)": 20,
+    Presupuesto: 38000,
+    Gastos: 8360,
+    "Fecha creación": "2023-05-22",
+    "Fecha final est.": "2023-10-20",
+    "Tiempo trans.(sem)": 3,
+    Estado: 2,
   },
 ];
 
@@ -550,6 +993,18 @@ export const reportePresuxPro = [
     "Nombre de recurso": "Licencia IntelliJ IDEA",
     "Costo de recurso (S/.)": 900,
     "Fecha de adquisición": "2023-04-02",
+  },
+  {
+    Id: 4,
+    "Nombre de recurso": "Monitor LG 27''",
+    "Costo de recurso (S/.)": 6600,
+    "Fecha de adquisición": "2023-03-22",
+  },
+  {
+    Id: 5,
+    "Nombre de recurso": "Pistola lectora Zebra DS2208",
+    "Costo de recurso (S/.)": 1950,
+    "Fecha de adquisición": "2023-05-12",
   },
 ];
 

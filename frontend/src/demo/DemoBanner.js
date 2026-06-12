@@ -33,16 +33,17 @@ export default function DemoBanner() {
         position: "sticky",
         top: 0,
         zIndex: 1200,
-        height: "3rem",
+        height: "2.75rem",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         padding: "0 3rem",
         textAlign: "center",
-        fontSize: "0.875rem",
-        fontWeight: 600,
-        color: "#1f2430",
-        backgroundColor: "#ffffff",
+        fontSize: "0.8125rem",
+        fontWeight: 500,
+        letterSpacing: "0.01em",
+        color: "#f4f4f5",
+        backgroundColor: "#09090b",
         overflow: "hidden",
       }}
     >
@@ -51,6 +52,7 @@ export default function DemoBanner() {
         style={{
           position: "absolute",
           inset: 0,
+          opacity: 0.55,
           maskImage,
           WebkitMaskImage: maskImage,
           maskComposite: "intersect",
@@ -58,7 +60,7 @@ export default function DemoBanner() {
           animation: "demo-banner-flow 20s linear infinite",
           backgroundImage: `repeating-linear-gradient(70deg, ${gradientStops})`,
           backgroundSize: "200% 100%",
-          filter: "saturate(2)",
+          filter: "saturate(1.8)",
         }}
       />
       <style>{`@keyframes demo-banner-flow { from { background-position: 0% 0; } to { background-position: 100% 0; } }`}</style>
@@ -78,7 +80,7 @@ export default function DemoBanner() {
           border: "none",
           background: "transparent",
           cursor: "pointer",
-          color: "#9aa0ae",
+          color: "#71717a",
           padding: 4,
           lineHeight: 0,
         }}

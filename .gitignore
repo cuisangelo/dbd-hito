@@ -1,0 +1,10 @@
+node_modules/
+build/
+.env.local
+.env.*.local
+.DS_Store
+npm-debug.log*
+
+# regenerable benchmark datasets (monografia/scripts_csv)
+monografia/datos_dbd/*-100k.csv
+monografia/datos_dbd/*-1M.csv

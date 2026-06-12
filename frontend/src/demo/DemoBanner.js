@@ -2,15 +2,15 @@ import { useState } from "react";
 
 const DISMISS_KEY = "demo-banner-dismissed";
 
-// Light-refraction flow effect, ported from the fumadocs rainbow banner.
-const RAINBOW = [
-  "rgba(0,149,255,0.56)",
-  "rgba(231,77,255,0.77)",
-  "rgba(255,0,0,0.73)",
-  "rgba(131,255,166,0.66)",
+// Cool monochrome flow effect (white/slate/blue), fumadocs-banner style.
+const FLOW_COLORS = [
+  "rgba(255,255,255,0.20)",
+  "rgba(96,165,250,0.30)",
+  "rgba(148,163,184,0.22)",
+  "rgba(186,230,253,0.28)",
 ];
-const gradientStops = [...RAINBOW, RAINBOW[0]]
-  .map((color, i) => `${color} ${(i * 50) / RAINBOW.length}%`)
+const gradientStops = [...FLOW_COLORS, FLOW_COLORS[0]]
+  .map((color, i) => `${color} ${(i * 50) / FLOW_COLORS.length}%`)
   .join(", ");
 const maskImage =
   "linear-gradient(to bottom, white, transparent), radial-gradient(circle at top center, white, transparent)";
@@ -52,7 +52,7 @@ export default function DemoBanner() {
         style={{
           position: "absolute",
           inset: 0,
-          opacity: 0.55,
+          opacity: 0.8,
           maskImage,
           WebkitMaskImage: maskImage,
           maskComposite: "intersect",
@@ -60,7 +60,6 @@ export default function DemoBanner() {
           animation: "demo-banner-flow 20s linear infinite",
           backgroundImage: `repeating-linear-gradient(70deg, ${gradientStops})`,
           backgroundSize: "200% 100%",
-          filter: "saturate(1.8)",
         }}
       />
       <style>{`@keyframes demo-banner-flow { from { background-position: 0% 0; } to { background-position: 100% 0; } }`}</style>

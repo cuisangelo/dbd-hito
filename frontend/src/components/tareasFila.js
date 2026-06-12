@@ -1,10 +1,10 @@
-
+import { Typography } from "@mui/material";
 
 export const tareasFila = () =>{
-    
+
 
     return(
-        <h1>a</h1>
+        <Typography variant="h6">a</Typography>
     );
 }
 

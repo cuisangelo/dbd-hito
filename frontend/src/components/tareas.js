@@ -1,17 +1,26 @@
 import { useEffect, useState } from "react";
 import {
-  Table,
+  Box,
   Button,
+  Chip,
+  Container,
+  Paper,
+  Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
   Typography,
-  Paper,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 // añado useParams
+
+const ESTADOS = {
+  1: { label: "Pendiente", color: "default" },
+  2: { label: "En progreso", color: "info" },
+  3: { label: "Finalizado", color: "success" },
+};
 
 export default function Tareas() {
   // añado
@@ -35,156 +44,65 @@ export default function Tareas() {
   }, [id]);
 
   return (
-    <>
-      <Typography textAlign="center" variant="h4" fontWeight="bold">
-        Reporte de tareas
+    <Container>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mt: 4,
+        }}
+      >
+        <Typography variant="h4">Reporte de tareas</Typography>
+        <Button variant="outlined" onClick={() => navigate("/")}>
+          Volver
+        </Button>
+      </Box>
+      <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+        Tareas del proyecto con encargados, fechas y estado
       </Typography>
 
-      <div
-        style={{
-          marginTop: "15px",
-          height: "30px",
-          backgroundColor: "black",
-          marginBottom: "10px",
-          marginRight: "10px",
-          marginLeft: "10px",
-        }}
-      ></div>
-
-      <div
-        style={{
-          marginTop: "15px",
-          height: "50px",
-          backgroundColor: "#ccc",
-          marginBottom: "10px",
-          marginRight: "10px",
-          marginLeft: "10px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div style={{ position: "absolute", top: 0, right: 0, margin: "10px" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => navigate("/")}
-          >
-            Volver
-          </Button>
-        </div>
-
-        <Typography variant="h5">Proyecto</Typography>
-      </div>
-
-      <div
-        style={{
-          backgroundColor: "#ccc",
-          borderRadius: "5px",
-          padding: "10px",
-          margin: "10px",
-          height: "70vh",
-        }}
-      >
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Tarea
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Encargado
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Fecha inicio
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Fecha límite
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Fecha fin
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Descripción
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Estado
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {tareas.map((tarea) => (
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Tarea</TableCell>
+              <TableCell>Encargado</TableCell>
+              <TableCell>Fecha inicio</TableCell>
+              <TableCell>Fecha límite</TableCell>
+              <TableCell>Fecha fin</TableCell>
+              <TableCell>Descripción</TableCell>
+              <TableCell>Estado</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {tareas.map((tarea) => {
+              const estado = ESTADOS[tarea.Estado];
+              return (
                 <TableRow key={tarea.id}>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {tarea.Tarea}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {tarea.Encargado}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {tarea["Fecha inicio"]}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {tarea["Fecha límite"]}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {tarea["Fecha fin"]}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {tarea.Descripcion}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {tarea.Estado}
+                  <TableCell>{tarea.Tarea}</TableCell>
+                  <TableCell>{tarea.Encargado}</TableCell>
+                  <TableCell>{tarea["Fecha inicio"]}</TableCell>
+                  <TableCell>{tarea["Fecha límite"]}</TableCell>
+                  <TableCell>{tarea["Fecha fin"]}</TableCell>
+                  <TableCell>{tarea.Descripcion}</TableCell>
+                  <TableCell>
+                    {estado ? (
+                      <Chip
+                        size="small"
+                        label={estado.label}
+                        color={estado.color}
+                      />
+                    ) : (
+                      tarea.Estado
+                    )}
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-    </>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 }

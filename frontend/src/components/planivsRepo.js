@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import {
-  Table,
+  Box,
   Button,
+  Container,
+  Paper,
+  Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
   Typography,
-  Paper,
 } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
 import "./estilo.css";
@@ -48,45 +50,34 @@ export default function PlanifivsReportado() {
   }, [fechaCreacion, fechaFin]);
 
   return (
-    <>
-      <Typography textAlign="center" variant="h4" fontWeight="bold">
-        Planificado vs Reportado
-      </Typography>
-
-      <div
-        style={{
-          marginTop: "15px",
-          height: "30px",
-          backgroundColor: "black",
-          marginBottom: "10px",
-          marginRight: "10px",
-          marginLeft: "10px",
-        }}
-      ></div>
-
-      <div
-        style={{
-          marginTop: "15px",
-          height: "50px",
-          backgroundColor: "#ccc",
-          marginBottom: "10px",
-          marginRight: "10px",
-          marginLeft: "10px",
+    <Container>
+      <Box
+        sx={{
           display: "flex",
+          justifyContent: "space-between",
           alignItems: "center",
-          justifyContent: "center",
+          mt: 4,
         }}
       >
-        <div style={{ position: "absolute", top: 0, right: 0, margin: "10px" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => navigate("/")}
-          >
-            Volver
-          </Button>
-        </div>
+        <Typography variant="h4">Planificado vs Reportado</Typography>
+        <Button variant="outlined" onClick={() => navigate("/")}>
+          Volver
+        </Button>
+      </Box>
+      <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+        Comparación de fechas planificadas y horas reportadas por proyecto
+      </Typography>
 
+      <Paper
+        sx={{
+          p: 2,
+          mb: 3,
+          display: "flex",
+          gap: 2,
+          alignItems: "center",
+          flexWrap: "wrap",
+        }}
+      >
         <div className="fecha-input">
           <label htmlFor="fechaCreacion">Fecha creación:</label>
           <input
@@ -109,101 +100,35 @@ export default function PlanifivsReportado() {
           variant="contained"
           component={Link}
           to={`/planifivsRepor/${fechaCreacion}/${fechaFin}`}
-          style={{
-            marginBottom: "4px",
-            marginRight: "20px",
-            backgroundColor: "black",
-            fontSize: 12,
-          }}
         >
           Consultar
         </Button>
-      </div>
+      </Paper>
 
-      <div
-        style={{
-          backgroundColor: "#ccc",
-          borderRadius: "5px",
-          padding: "10px",
-          margin: "10px",
-          height: "70vh",
-        }}
-      >
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Proyecto
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Fecha Inicio
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Fecha fin estimada
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Fecha fin
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Horas empleadas
-                </TableCell>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Proyecto</TableCell>
+              <TableCell>Fecha Inicio</TableCell>
+              <TableCell>Fecha fin estimada</TableCell>
+              <TableCell>Fecha fin</TableCell>
+              <TableCell align="right">Horas empleadas</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {datos.map((dato) => (
+              <TableRow key={dato.id}>
+                <TableCell>{dato.Proyecto}</TableCell>
+                <TableCell>{dato["Fecha Inicio"]}</TableCell>
+                <TableCell>{dato["Fecha fin estimada"]}</TableCell>
+                <TableCell>{dato["Fecha fin"]}</TableCell>
+                <TableCell align="right">{dato["Horas empleadas"]}</TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {datos.map((dato) => (
-                <TableRow key={dato.id}>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {dato.Proyecto}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {dato["Fecha Inicio"]}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {dato["Fecha fin estimada"]}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {dato["Fecha fin"]}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {dato["Horas empleadas"]}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-    </>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 }

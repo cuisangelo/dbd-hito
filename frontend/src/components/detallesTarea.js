@@ -1,6 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { List, ListItem, ListItemText, Typography, Select, MenuItem, Button } from '@mui/material';
+import { List, ListItem, ListItemText, Typography, Select, MenuItem, Button, Box, Chip, IconButton } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+
+const ESTADO_CHIP_COLORS = { 1: "default", 2: "info", 3: "success" };
+
+const Campo = ({ etiqueta, children }) => (
+  <Box>
+    <Typography variant="caption" color="text.secondary">
+      {etiqueta}
+    </Typography>
+    <Box sx={{ backgroundColor: "#f4f6fa", borderRadius: 2, p: 1.5 }}>
+      {children}
+    </Box>
+  </Box>
+);
 
 const DetallesTareaComponent = ({id}) => {
     const [detallesTarea, setDetallesTarea] = useState(null);
@@ -14,7 +28,7 @@ const DetallesTareaComponent = ({id}) => {
     const handleEstadoTareaChange = (event) => {
       setEstado_Tarea(event.target.value);
     };
-  
+
     const handleEditarEstadoTarea = () => {
       const confirmar = window.confirm('¿Estás seguro de editar el estado?');
         if (confirmar){
@@ -35,9 +49,9 @@ const DetallesTareaComponent = ({id}) => {
             console.error('Error al enviar la petición POST:', error);
           });
           window.location.reload();
-        }  
+        }
     };
-    
+
     const handleImagenClick = () => {
       setMostrarMenu(!mostrarMenu);
     };
@@ -66,82 +80,118 @@ const DetallesTareaComponent = ({id}) => {
           console.log(error);
         }
       };
-  
+
       obtenerDetallesTarea();
     }, [id]);
-  
+
     return (
       <div>
         {detallesTarea && (
           <>
-            <Typography style={{width: 'calc(100% - 10px)', backgroundColor: '#D9D9D9', color: '#7D7D7D', fontSize: 48, paddingLeft: 10}}>
-                {detallesTarea.nombre_tarea}</Typography>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', padding: 18 }}>
-                <div >
-                    <Typography variant="h6" marginTop='12px'>Encargado:</Typography>
-                    <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                        {encargados.map((encargado, index) => (
-                        <div key={index} style={{width: 'calc(100% - 26px)', marginTop: 6, backgroundColor: '#D9D9D9'}}>
-                            <Typography style={{paddingLeft:10, fontSize: 20}}>{encargado.encargado} </Typography>
-                        </div>
-                        ))}
-                    </div>
-                    <Typography variant="h6" marginTop='12px'>Fecha Creación: </Typography>
-                    <Typography style={{width: 'calc(100% - 36px)', flex: '1 0 100%', marginTop: 6, backgroundColor: '#D9D9D9', paddingLeft:10, fontSize: 20}}>{detallesTarea.fecha_creacion}</Typography>
-                    <Typography variant="h6" marginTop='12px'>Fecha Entrega:</Typography>
-                    <Typography style={{width: 'calc(100% - 36px)', flex: '1 0 100%', marginTop: 6, backgroundColor: '#D9D9D9', paddingLeft:10, fontSize: 20}}> {detallesTarea.fecha_entrega}</Typography>
-                    <Typography variant="h6" marginTop='12px'>Descripción:</Typography>
-                    <Typography style={{width: 'calc(100% - 36px)', flex: '1 0 100%', marginTop: 6, backgroundColor: '#D9D9D9', paddingLeft:10, fontSize: 20}}>{detallesTarea.descripcion_tarea}</Typography>
-                    <Typography variant="h6" marginTop='12px'>Fecha Realizada:</Typography>
-                    <Typography style={{width: 'calc(100% - 36px)', flex: '1 0 100%', marginTop: 6, backgroundColor: '#D9D9D9', paddingLeft:10, fontSize: 20}}> {fechaFinalizacion}</Typography>
-                </div>
-                <div div style={{borderLeft: '1px solid #000000', paddingLeft:11}}>
-                <Typography variant="h6" marginTop='12px'>Estado de Tarea: </Typography>
-                <img
-                  src={require("./img/edit.png")}
-                  width='24px'
-                  alt="Editar estado tarea"
-                  onClick={handleImagenClick}
-                  style={{ cursor: 'pointer' }}
-                />
-                {mostrarMenu && (
-                  <Select
-                    value={estado_tarea}
-                    onChange={handleEstadoTareaChange}
-                    style={{ marginLeft: 10, fontSize: 20}}
+            <Typography variant="h5" sx={{ mb: 3 }}>
+              {detallesTarea.nombre_tarea}
+            </Typography>
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" },
+                gap: 3,
+              }}
+            >
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                <Box>
+                  <Typography variant="caption" color="text.secondary">
+                    Encargados
+                  </Typography>
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 0.5 }}>
+                    {encargados.map((encargado, index) => (
+                      <Chip key={index} label={encargado.encargado} />
+                    ))}
+                  </Box>
+                </Box>
+                <Campo etiqueta="Fecha creación">
+                  <Typography variant="body1">{detallesTarea.fecha_creacion}</Typography>
+                </Campo>
+                <Campo etiqueta="Fecha entrega">
+                  <Typography variant="body1">{detallesTarea.fecha_entrega}</Typography>
+                </Campo>
+                <Campo etiqueta="Descripción">
+                  <Typography variant="body1">{detallesTarea.descripcion_tarea}</Typography>
+                </Campo>
+                <Campo etiqueta="Fecha realizada">
+                  <Typography variant="body1">{fechaFinalizacion}</Typography>
+                </Campo>
+              </Box>
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                <Box>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                    <Typography variant="caption" color="text.secondary">
+                      Estado de tarea
+                    </Typography>
+                    <IconButton
+                      size="small"
+                      color="primary"
+                      aria-label="Editar estado tarea"
+                      onClick={handleImagenClick}
                     >
-                    <MenuItem value="1">Pendiente</MenuItem>
-                    <MenuItem value="2">En Progreso</MenuItem>
-                    <MenuItem value="3">Finalizada</MenuItem>
-                  </Select>
-                )}
-                {estadoTarea && mostrarMenu && (
-                  <Button type="submit" onClick={handleEditarEstadoTarea} color="primary">
-                    Guardar
-                  </Button>
-                )}
-                {!mostrarMenu && (
-                  <Typography style={{width: 'calc(100% - 36px)', flex: '1 0 100%', marginTop: 6, backgroundColor: '#D9D9D9', paddingLeft:10, fontSize: 20}}>{estadoTarea}</Typography>
-                )}
-                    <Typography variant="h6" marginTop='12px'>Jefe de Proyecto: </Typography>
-                    <Typography style={{width: 'calc(100% - 36px)', flex: '1 0 100%', marginTop: 6, backgroundColor: '#D9D9D9', paddingLeft:10, fontSize: 20}}>{detallesTarea.jefe_proyecto}</Typography>
-                    <Typography variant="h6" marginTop='12px'>Adjuntos:</Typography>
-                    <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                        
-                        {adjuntos.map((adjuntos, index) => (
-                        <div key={index} style={{flex: '1 0 100%', marginTop: 6, backgroundColor: '#D9D9D9'}}>
-                        <Link to={adjuntos.adjunto_link} target="_blank" download={adjuntos.nombre_adjunto}>
-                        <Typography style={{paddingLeft:10, fontSize: 20}}>{adjuntos.nombre_adjunto}</Typography>
-                        </Link>
-                    </div>
-              ))}
-            </div>
-                </div>
-            </div>
+                      <EditIcon fontSize="small" />
+                    </IconButton>
+                  </Box>
+                  {mostrarMenu && (
+                    <Select
+                      size="small"
+                      value={estado_tarea}
+                      onChange={handleEstadoTareaChange}
+                    >
+                      <MenuItem value="1">Pendiente</MenuItem>
+                      <MenuItem value="2">En Progreso</MenuItem>
+                      <MenuItem value="3">Finalizada</MenuItem>
+                    </Select>
+                  )}
+                  {estadoTarea && mostrarMenu && (
+                    <Button type="submit" onClick={handleEditarEstadoTarea} color="primary">
+                      Guardar
+                    </Button>
+                  )}
+                  {!mostrarMenu && (
+                    <Box sx={{ mt: 0.5 }}>
+                      <Chip
+                        size="small"
+                        label={estadoTarea}
+                        color={ESTADO_CHIP_COLORS[detallesTarea.estado_tarea] || "default"}
+                      />
+                    </Box>
+                  )}
+                </Box>
+                <Campo etiqueta="Jefe de proyecto">
+                  <Typography variant="body1">{detallesTarea.jefe_proyecto}</Typography>
+                </Campo>
+                <Box>
+                  <Typography variant="caption" color="text.secondary">
+                    Adjuntos
+                  </Typography>
+                  <Box sx={{ display: "flex", flexDirection: "column", gap: 1, mt: 0.5 }}>
+                    {adjuntos.map((adjuntos, index) => (
+                      <Link
+                        key={index}
+                        to={adjuntos.adjunto_link}
+                        target="_blank"
+                        download={adjuntos.nombre_adjunto}
+                        style={{ textDecoration: "none" }}
+                      >
+                        <Typography variant="body1" color="primary">
+                          {adjuntos.nombre_adjunto}
+                        </Typography>
+                      </Link>
+                    ))}
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
         </>
         )}
       </div>
     );
   };
-  
+
   export default DetallesTareaComponent;

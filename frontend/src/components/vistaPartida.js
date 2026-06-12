@@ -11,7 +11,7 @@ import {
   Button,
   TextField,
   Box,
-  Grid,
+  Chip,
   Typography
 } from "@mui/material";
 
@@ -59,84 +59,80 @@ export default function ListaPartidas() {
 
   return (
     <Container>
-      <Typography variant="h4" component="h1" align="center" gutterBottom>
-        Partida
+      <Typography variant="h4" sx={{ mt: 4 }}>
+        Partidas
       </Typography>
-      <form ref={formRef} onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
+      <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+        Gestión de partidas por presupuesto
+      </Typography>
+      <Paper sx={{ p: 3 }}>
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          Nueva partida
+        </Typography>
+        <form ref={formRef} onSubmit={handleSubmit}>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
             <TextField
               name="descripcion"
               label="Descripción"
-              fullWidth
-              margin="normal"
               placeholder="Ingrese la descripción"
+              sx={{ flex: "1 1 240px" }}
             />
             <TextField
               name="fecha_estimacion"
               label="Fecha estimación"
-              fullWidth
-              margin="normal"
               defaultValue={obtenerFechaActual()}
               type="date"
               InputLabelProps={{
                 shrink: true,
               }}
+              sx={{ flex: "1 1 240px" }}
             />
             <TextField
               name="monto"
               label="Monto"
               type="number"
-              fullWidth
-              margin="normal"
               placeholder="Ingrese el monto"
+              sx={{ flex: "1 1 240px" }}
             />
-          </Grid>
-          <Grid item xs={12} sm={6}>
             <TextField
               name="divisa"
               label="Divisa"
-              fullWidth
-              margin="normal"
               placeholder="Ingrese la divisa"
+              sx={{ flex: "1 1 240px" }}
             />
             <TextField
               name="estado_partida"
               label="Estado"
-              fullWidth
-              margin="normal"
               placeholder="Ingrese el estado de la partida"
+              sx={{ flex: "1 1 240px" }}
             />
             <TextField
               name="presupuesto_id"
               label="Presupuesto Id"
-              fullWidth
-              margin="normal"
               placeholder="Ingrese el ID del presupuesto"
+              sx={{ flex: "1 1 240px" }}
             />
             <TextField
               name="tipo_partida"
               label="Tipo Partida"
-              fullWidth
-              margin="normal"
               placeholder="Ingrese el tipo de partida"
+              sx={{ flex: "1 1 240px" }}
             />
-          </Grid>
-        </Grid>
-        <Button type="submit" variant="contained" color="primary">
-          Agregar Partida
-        </Button>
-      </form>
+          </Box>
+          <Button type="submit" variant="contained" sx={{ mt: 2 }}>
+            Agregar Partida
+          </Button>
+        </form>
+      </Paper>
       {/* Tabla de partidas */}
-      <TableContainer component={Paper} sx={{ marginTop: 2 }}>
+      <TableContainer component={Paper} sx={{ mt: 3 }}>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell>Partida Id</TableCell>
               <TableCell>Descripción</TableCell>
               <TableCell>Fecha estimación</TableCell>
-              <TableCell>Monto</TableCell>
-              <TableCell>Divisa</TableCell>
+              <TableCell align="right">Monto</TableCell>
               <TableCell>Estado</TableCell>
               <TableCell>Presupuesto Id</TableCell>
               <TableCell>Tipo Partida</TableCell>
@@ -148,18 +144,19 @@ export default function ListaPartidas() {
                 key={row.partida_id}
                 sx={{
                   cursor: "pointer",
-                  "&:hover": {
-                    backgroundColor: "#f5f5f5",
-                  },
+                  "&:last-child td, &:last-child th": { border: 0 },
                 }}
                 onClick={() => navigate(`/proyecto/${id}/presupuestos/${id_pre}/partidas/${row.partida_id}/gastos`)}
               >
                 <TableCell>{row.partida_id}</TableCell>
                 <TableCell>{row.descripcion}</TableCell>
                 <TableCell>{row.fecha_estimacion}</TableCell>
-                <TableCell>{row.monto}</TableCell>
-                <TableCell>{row.divisa}</TableCell>
-                <TableCell>{row.estado_partida}</TableCell>
+                <TableCell align="right">
+                  {row.monto} {row.divisa}
+                </TableCell>
+                <TableCell>
+                  <Chip size="small" label={row.estado_partida} />
+                </TableCell>
                 <TableCell>{row.presupuesto_id}</TableCell>
                 <TableCell>{row.tipo_partida}</TableCell>
               </TableRow>
@@ -168,11 +165,11 @@ export default function ListaPartidas() {
         </Table>
       </TableContainer>
       {/* Botones adicionales */}
-      <Box sx={{ marginTop: 2 }}>
-        <Button variant="contained" color="primary" sx={{ marginRight: 2 }}>
+      <Box sx={{ mt: 2, display: "flex", gap: 1.5 }}>
+        <Button variant="outlined">
           Quitar Partida
         </Button>
-        <Button variant="contained" color="primary">
+        <Button variant="outlined">
           Editar Partida
         </Button>
       </Box>

@@ -1,6 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { List, ListItem, ListItemText, Typography, Select, MenuItem, Button } from '@mui/material';
+import { List, ListItem, ListItemText, Typography, Select, MenuItem, Button, Box, Chip, IconButton } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+
+const ESTADO_CHIP_COLOR = {
+  Pendiente: "default",
+  "En Progreso": "info",
+  Finalizada: "success",
+};
+
+const Campo = ({ label, children }) => (
+  <Box>
+    <Typography variant="caption" color="text.secondary">
+      {label}
+    </Typography>
+    <Box sx={{ backgroundColor: "#f4f6fa", borderRadius: 2, p: 1.5 }}>
+      <Typography variant="body1">{children}</Typography>
+    </Box>
+  </Box>
+);
 
 const DetallesTareaCasComponent = ({id}) => {
     const [detallesTarea, setDetallesTarea] = useState(null);
@@ -16,7 +34,7 @@ const DetallesTareaCasComponent = ({id}) => {
     const handleEstadoTareaChange = (event) => {
       setEstado_Tarea(event.target.value);
     };
-  
+
     const handleEditarEstadoTarea = () => {
       const confirmar = window.confirm('¿Estás seguro de editar el estado?');
         if (confirmar){
@@ -37,9 +55,9 @@ const DetallesTareaCasComponent = ({id}) => {
             console.error('Error al enviar la petición POST:', error);
           });
           window.location.reload();
-        }  
+        }
     };
-    
+
     const handleImagenClick = () => {
       setMostrarMenu(!mostrarMenu);
     };
@@ -53,7 +71,7 @@ const DetallesTareaCasComponent = ({id}) => {
           setEncargados(data.encargados);
           setAdjuntos(data.adjuntos);
 
-          const { fecha_creacion_tarea, hora_creacion_tarea, fecha_limite_tarea, hora_limite_tarea, 
+          const { fecha_creacion_tarea, hora_creacion_tarea, fecha_limite_tarea, hora_limite_tarea,
             fecha_realizada_tarea, hora_realizada_tarea, estado_tarea } = data.detallesTarea[0];
             const fecha_creacion = `${fecha_creacion_tarea.substring(0, 10)} - ${hora_creacion_tarea.substring(0, 8)}`;
             setFechaCreacion(fecha_creacion);
@@ -73,64 +91,80 @@ const DetallesTareaCasComponent = ({id}) => {
           console.log(error);
         }
       };
-  
+
       obtenerDetallesTarea();
     }, [id]);
-  
+
     return (
       <div>
         {detallesTarea && (
           <>
-            <Typography style={{width: 'calc(100% - 10px)', backgroundColor: '#D9D9D9', color: '#7D7D7D', fontSize: 48, paddingLeft: 10}}>
-                {detallesTarea.nombre_tarea}</Typography>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', padding: 18 }}>
-                <div >
-                    <Typography variant="h6" marginTop='12px'>Fecha Creación: </Typography>
-                    <Typography style={{width: 'calc(100% - 36px)', flex: '1 0 100%', marginTop: 6, backgroundColor: '#D9D9D9', paddingLeft:10, fontSize: 20}}>{fecha_creacion}</Typography>
-                    <Typography variant="h6" marginTop='12px'>Fecha Entrega:</Typography>
-                    <Typography style={{width: 'calc(100% - 36px)', flex: '1 0 100%', marginTop: 6, backgroundColor: '#D9D9D9', paddingLeft:10, fontSize: 20}}> {fecha_entrega}</Typography>
-                    <Typography variant="h6" marginTop='12px'>Descripción:</Typography>
-                    <Typography style={{width: 'calc(100% - 36px)', flex: '1 0 100%', marginTop: 6, backgroundColor: '#D9D9D9', paddingLeft:10, fontSize: 20}}>{detallesTarea.descripcion_tarea}</Typography>
-                    <Typography variant="h6" marginTop='12px'>Fecha Realizada:</Typography>
-                    <Typography style={{width: 'calc(100% - 36px)', flex: '1 0 100%', marginTop: 6, backgroundColor: '#D9D9D9', paddingLeft:10, fontSize: 20}}> {fechaFinalizacion}</Typography>
-                </div>
-                <div div style={{borderLeft: '1px solid #000000', paddingLeft:11}}>
-                <Typography variant="h6" marginTop='12px'>Estado de Tarea: </Typography>
-                <img
-                  src={require("./img/edit.png")}
-                  width='24px'
-                  alt="Editar estado tarea"
-                  onClick={handleImagenClick}
-                  style={{ cursor: 'pointer' }}
-                />
-                {mostrarMenu && (
-                  <Select
-                    value={estado_tarea}
-                    onChange={handleEstadoTareaChange}
-                    style={{ marginLeft: 10, fontSize: 20}}
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              {detallesTarea.nombre_tarea}
+            </Typography>
+            <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 3 }}>
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                <Campo label="Fecha Creación">{fecha_creacion}</Campo>
+                <Campo label="Fecha Entrega">{fecha_entrega}</Campo>
+                <Campo label="Descripción">{detallesTarea.descripcion_tarea}</Campo>
+                <Campo label="Fecha Realizada">{fechaFinalizacion}</Campo>
+              </Box>
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                <Box>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                    <Typography variant="caption" color="text.secondary">
+                      Estado de Tarea
+                    </Typography>
+                    <IconButton
+                      size="small"
+                      aria-label="Editar estado tarea"
+                      onClick={handleImagenClick}
                     >
-                    <MenuItem value="1">Pendiente</MenuItem>
-                    <MenuItem value="2">En Progreso</MenuItem>
-                    <MenuItem value="3">Finalizada</MenuItem>
-                  </Select>
-                )}
-                {estadoTarea && mostrarMenu && (
-                  <Button type="submit" onClick={handleEditarEstadoTarea} color="primary">
-                    Guardar
-                  </Button>
-                )}
-                {!mostrarMenu && (
-                  <Typography style={{width: 'calc(100% - 36px)', flex: '1 0 100%', marginTop: 6, backgroundColor: '#D9D9D9', paddingLeft:10, fontSize: 20}}>{estadoTarea}</Typography>
-                )}
-                    <Typography variant="h6" marginTop='12px'>Jefe de Proyecto: </Typography>
-                    <Typography style={{width: 'calc(100% - 36px)', flex: '1 0 100%', marginTop: 6, backgroundColor: '#D9D9D9', paddingLeft:10, fontSize: 20}}>{detallesTarea.jefe_proyecto}</Typography>
-                    {/* <Typography variant="h6" marginTop='12px'>Adjuntos:</Typography> */}
-                </div>
-            </div>
+                      <EditIcon fontSize="inherit" />
+                    </IconButton>
+                  </Box>
+                  {mostrarMenu && (
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                      <Select
+                        size="small"
+                        value={estado_tarea}
+                        onChange={handleEstadoTareaChange}
+                      >
+                        <MenuItem value="1">Pendiente</MenuItem>
+                        <MenuItem value="2">En Progreso</MenuItem>
+                        <MenuItem value="3">Finalizada</MenuItem>
+                      </Select>
+                      {estadoTarea && (
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          size="small"
+                          onClick={handleEditarEstadoTarea}
+                          color="primary"
+                        >
+                          Guardar
+                        </Button>
+                      )}
+                    </Box>
+                  )}
+                  {!mostrarMenu && (
+                    <Box>
+                      <Chip
+                        size="small"
+                        label={estadoTarea}
+                        color={ESTADO_CHIP_COLOR[estadoTarea] || "default"}
+                      />
+                    </Box>
+                  )}
+                </Box>
+                <Campo label="Jefe de Proyecto">{detallesTarea.jefe_proyecto}</Campo>
+                {/* <Typography variant="h6" marginTop='12px'>Adjuntos:</Typography> */}
+              </Box>
+            </Box>
         </>
         )}
       </div>
     );
   };
-  
+
   export default DetallesTareaCasComponent;

@@ -1,16 +1,17 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
-import { Button, Container, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-import { FormGroup,
-	FormControlLabel,
-	Checkbox,
-	FormHelperText
-} from '@mui/material';
+import { Box, Button, Chip, Container, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Checkbox, FormHelperText } from '@mui/material';
 import DialogAsignarRecurso from './DialogAsignarRecurso';
 import DialogQuitarRecurso from './DialogQuitarRecurso'
 import DialogEditarRecurso from './DialogEditarRecurso';
 import { alignProperty } from '@mui/material/styles/cssUtils';
+
+const TIPOS_RECURSO = {
+	1: { label: 'Hardware', color: 'default' },
+	2: { label: 'Software', color: 'info' },
+};
 
 export default function VerProyectoAsignacionesRecursos() {
 	const navigate = useNavigate();
@@ -80,103 +81,138 @@ export default function VerProyectoAsignacionesRecursos() {
 	};
 	return (
 		<Container>
-			<Button style={{ margin: '1rem', fontSize: '2rem' }} variant = 'contained' onClick={() => navigate(`/lista-proyectos/${params.id}/asignaciones-recursos`)}>
-				Recursos
-			</Button>
-			<Button style={{ margin: '1rem', fontSize: '2rem' }} variant = 'contained' onClick={() => navigate(`/lista-proyectos/${params.id}/asignaciones-empleados`)}>
-				Empleados
-			</Button>
-			{
-				proyectoSeleccionado && (
-					<Typography style={{ marginTop: '1rem', marginBottom: '1rem', fontWeight: 'bold', fontSize: '4rem', fontFamily: 'monospace' }}>
-						{proyectoSeleccionado.nombre_proyecto}
-					</Typography>
-				)
-			}
-			<Typography style={{ marginTop: '1rem', marginBottom: '1rem', fontSize: '2rem', fontFamily: 'monospace' }}>Recursos asignados al proyecto</Typography>
-			<TableContainer component={Paper}>
-				<Table>
-						<TableHead sx = {{ backgroundColor: '#4285F4' }}>
-							<TableCell sx = {{ color: '#FFFFFF', fontWeight: 'bold', fontSize: '1.4rem', textAlign: 'center' }}>Id</TableCell>
-							<TableCell sx = {{ color: '#FFFFFF', fontWeight: 'bold', fontSize: '1.4rem', textAlign: 'center' }}>Recurso</TableCell>
-							<TableCell sx = {{ color: '#FFFFFF', fontWeight: 'bold', fontSize: '1.4rem', textAlign: 'center' }}>Tipo</TableCell>
-							<TableCell sx = {{ color: '#FFFFFF', fontWeight: 'bold', fontSize: '1.4rem', textAlign: 'center' }}>Cant. Asig.</TableCell>
-							<TableCell>
-							</TableCell>
+			<Typography variant="h4" sx={{ mt: 4 }}>
+				{proyectoSeleccionado ? proyectoSeleccionado.nombre_proyecto : 'Proyecto'}
+			</Typography>
+			<Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+				Gestión de recursos asignados al proyecto
+			</Typography>
+			<Box sx={{ display: 'flex', gap: 1.5 }}>
+				<Button size="small" variant="contained" onClick={() => navigate(`/lista-proyectos/${params.id}/asignaciones-recursos`)}>
+					Recursos
+				</Button>
+				<Button size="small" variant="outlined" onClick={() => navigate(`/lista-proyectos/${params.id}/asignaciones-empleados`)}>
+					Empleados
+				</Button>
+			</Box>
+			<Box sx={{ mt: 4 }}>
+				<Typography variant="h6" sx={{ mb: 2 }}>
+					Recursos asignados al proyecto
+				</Typography>
+				<TableContainer component={Paper}>
+					<Table>
+						<TableHead>
+							<TableRow>
+								<TableCell>Id</TableCell>
+								<TableCell>Recurso</TableCell>
+								<TableCell>Tipo</TableCell>
+								<TableCell align="right">Cantidad asignada</TableCell>
+								<TableCell padding="checkbox" />
+							</TableRow>
 						</TableHead>
 						<TableBody>
 							{
-								proyectoAsignacionesRecursos.map(row => (
-									<TableRow key={row.recurso_id} sx={
-										{'&:last-child td, &:last-child th': { border: 0 }}
-									}>
-										<TableCell sx = {{ fontSize: '1.2rem', textAlign: 'center' }}>{row.recurso_id}</TableCell>
-										<TableCell sx = {{ fontSize: '1.2rem', textAlign: 'center' }}>{row.nombre}</TableCell>
-										<TableCell sx = {{ fontSize: '1.2rem', textAlign: 'center' }}>{row.tipo_recurso}</TableCell>
-										<TableCell sx = {{ fontSize: '1.2rem', textAlign: 'center' }}>{row.cantidad_asignada}</TableCell>
-										<TableCell>
-											<FormGroup>
-												<FormControlLabel
-													control={
-														<Checkbox
-															checked = {selectedRecursoId === row.recurso_id}
-															onChange = {() => handleCheckBoxChange(row.recurso_id)}
-														/>
-													}
+								proyectoAsignacionesRecursos.map(row => {
+									const tipo = TIPOS_RECURSO[row.tipo_recurso];
+									return (
+										<TableRow key={row.recurso_id} sx={
+											{'&:last-child td, &:last-child th': { border: 0 }}
+										}>
+											<TableCell>{row.recurso_id}</TableCell>
+											<TableCell>{row.nombre}</TableCell>
+											<TableCell>
+												{tipo ? (
+													<Chip size="small" label={tipo.label} color={tipo.color} />
+												) : (
+													row.tipo_recurso
+												)}
+											</TableCell>
+											<TableCell align="right">{row.cantidad_asignada}</TableCell>
+											<TableCell padding="checkbox">
+												<Checkbox
+													checked = {selectedRecursoId === row.recurso_id}
+													onChange = {() => handleCheckBoxChange(row.recurso_id)}
 												/>
-											</FormGroup>
-										</TableCell>
-									</TableRow>
-							))}	
+											</TableCell>
+										</TableRow>
+									);
+							})}
 						</TableBody>
-				</Table>			
-			</TableContainer>
-			<Typography style={{ marginTop: '1rem', marginBottom: '1rem', fontSize: '2rem', fontFamily: 'monospace' }}>Recursos disponibles</Typography>
-			<TableContainer component={Paper}>
-				<Table>
-						<TableHead sx = {{ backgroundColor: '#4285F4' }}>
-							<TableCell sx = {{ color: '#FFFFFF', fontWeight: 'bold', fontSize: '1.4rem', textAlign: 'center' }}>Id</TableCell>
-							<TableCell sx = {{ color: '#FFFFFF', fontWeight: 'bold', fontSize: '1.4rem', textAlign: 'center' }}>Recurso</TableCell>
-							<TableCell sx = {{ color: '#FFFFFF', fontWeight: 'bold', fontSize: '1.4rem', textAlign: 'center' }}>Tipo</TableCell>
-							<TableCell sx = {{ color: '#FFFFFF', fontWeight: 'bold', fontSize: '1.4rem', textAlign: 'center' }}>Cant. Disp.</TableCell>   
-							<TableCell></TableCell>
+					</Table>
+				</TableContainer>
+			</Box>
+			<Box sx={{ mt: 4 }}>
+				<Typography variant="h6" sx={{ mb: 2 }}>
+					Recursos disponibles
+				</Typography>
+				<TableContainer component={Paper}>
+					<Table>
+						<TableHead>
+							<TableRow>
+								<TableCell>Id</TableCell>
+								<TableCell>Recurso</TableCell>
+								<TableCell>Tipo</TableCell>
+								<TableCell align="right">Cantidad disponible</TableCell>
+								<TableCell padding="checkbox" />
+							</TableRow>
 						</TableHead>
 						<TableBody>
 							{
-								recursosDisponibles.map(row => (
-									<TableRow key={row.recurso_id} sx={
-										{'&:last-child td, &:last-child th': { border: 0 }}
-									}>
-										<TableCell sx = {{ fontSize: '1.2rem', textAlign: 'center' }}>{row.recurso_id}</TableCell>
-										<TableCell sx = {{ fontSize: '1.2rem', textAlign: 'center' }}>{row.nombre}</TableCell>
-										<TableCell sx = {{ fontSize: '1.2rem', textAlign: 'center' }}>{row.tipo_recurso}</TableCell>
-										<TableCell sx = {{ fontSize: '1.2rem', textAlign: 'center' }}>{row.cantidad_disponible}</TableCell>
-										<TableCell>
-											<FormGroup>
-												<FormControlLabel
-													control={
-														<Checkbox
-															checked = {selectedRecursoId === row.recurso_id}
-															onChange={() => handleCheckBoxChange(row.recurso_id)}
-														/>
-													}
+								recursosDisponibles.map(row => {
+									const tipo = TIPOS_RECURSO[row.tipo_recurso];
+									return (
+										<TableRow key={row.recurso_id} sx={
+											{'&:last-child td, &:last-child th': { border: 0 }}
+										}>
+											<TableCell>{row.recurso_id}</TableCell>
+											<TableCell>{row.nombre}</TableCell>
+											<TableCell>
+												{tipo ? (
+													<Chip size="small" label={tipo.label} color={tipo.color} />
+												) : (
+													row.tipo_recurso
+												)}
+											</TableCell>
+											<TableCell align="right">{row.cantidad_disponible}</TableCell>
+											<TableCell padding="checkbox">
+												<Checkbox
+													checked = {selectedRecursoId === row.recurso_id}
+													onChange={() => handleCheckBoxChange(row.recurso_id)}
 												/>
-											</FormGroup>
-										</TableCell>
-									</TableRow>
-							))}
+											</TableCell>
+										</TableRow>
+									);
+							})}
 						</TableBody>
-				</Table>
-			</TableContainer>
-			<Button
-				variant	= "contained"
-				color = "success"
-				disabled = { isButtonAsignarDisabled }
-				onClick = { handleAsignarButtonClick }
-				style={{ margin: '1rem' }}
-			>
-				Asignar recurso
-			</Button>
+					</Table>
+				</TableContainer>
+			</Box>
+			<Box sx={{ display: 'flex', gap: 1.5, mt: 3, mb: 4 }}>
+				<Button
+					variant	= "contained"
+					color = "success"
+					disabled = { isButtonAsignarDisabled }
+					onClick = { handleAsignarButtonClick }
+				>
+					Asignar recurso
+				</Button>
+				<Button
+					variant	= "outlined"
+					color = "error"
+					disabled = { isButtonQuitarDisabled }
+					onClick = { handleQuitarButtonClick }
+				>
+					Quitar recurso
+				</Button>
+				<Button
+					variant	= "outlined"
+					color = 'info'
+					disabled = { isButtonQuitarDisabled }
+					onClick = { handleEditarButtonClick }
+				>
+					Editar cantidad
+				</Button>
+			</Box>
 			{
 				openAsignarDialog && (
 					<DialogAsignarRecurso
@@ -187,15 +223,6 @@ export default function VerProyectoAsignacionesRecursos() {
 					/>
 				)
 			}
-			<Button
-				variant	= "contained"
-				color = "error"
-				disabled = { isButtonQuitarDisabled }
-				onClick = { handleQuitarButtonClick }
-				style={{ margin: '1rem' }}
-			>
-				Quitar recurso
-			</Button>
 			{
 				openQuitarDialog && (
 					<DialogQuitarRecurso
@@ -206,15 +233,6 @@ export default function VerProyectoAsignacionesRecursos() {
 					/>
 				)
 			}
-			<Button
-				variant	= "contained"
-				color = 'info'
-				disabled = { isButtonQuitarDisabled }
-				onClick = { handleEditarButtonClick }
-				style={{ margin: '1rem' }}
-			>
-				Editar cantidad
-			</Button>
 			{
 				openEditarDialog && (
 					<DialogEditarRecurso

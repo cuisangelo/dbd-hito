@@ -7,7 +7,6 @@ import {
   DialogContentText,
   DialogActions,
   Button,
-  Typography,
   TextField
 } from '@mui/material';
 
@@ -26,44 +25,28 @@ const DialogQuitarRecurso = ({ open, handleClose, proyecto, recurso }) => {
         handleClose();
     };
     return (
-        <Dialog open={ open } onClose={ handleClose }>
+        <Dialog open={ open } onClose={ handleClose } fullWidth maxWidth="xs">
+            <DialogTitle>Quitar recurso</DialogTitle>
             <DialogContent>
-                <Typography
-                    variant='body1'
-                    style={{ fontSize: '20px',color: 'red', fontWeight: 'bold' }}
-                >
-                    ¿Estás seguro de que deseas quitar al recurso
-                </Typography>
-                <Typography fontWeight = "bold">{recurso.nombre}</Typography>
-                <Typography>asignado al proyecto:</Typography>
-                <Typography fontWeight = "bold">{proyecto.nombre_proyecto}</Typography>
+                <DialogContentText>
+                    ¿Seguro que deseas quitar el recurso <strong>{recurso.nombre}</strong>{' '}
+                    asignado al proyecto <strong>{proyecto.nombre_proyecto}</strong>?
+                </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button
-                    variant = 'contained'
-                    color = 'primary'
-                    onClick={ handleConfirm }
-                >
-                    Confirmar
+                <Button onClick={handleClose}>
+                    Cancelar
                 </Button>
                 <Button
                     variant = 'contained'
-                    sx = {
-                        {
-                            backgroundColor: 'red',
-                            color: 'white',
-                            '&:hover': {
-                                backgroundColor: 'darkred',
-                            }
-                        }
-                    }
-                    onClick={handleClose}
+                    color = 'error'
+                    onClick={ handleConfirm }
                 >
-                    Cancelar
+                    Confirmar
                 </Button>
             </DialogActions>
         </Dialog>
     );
 };
-  
+
 export default DialogQuitarRecurso;

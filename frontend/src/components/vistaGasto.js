@@ -11,7 +11,6 @@ import {
   Button,
   TextField,
   Box,
-  Grid,
   Typography
 } from "@mui/material";
 
@@ -57,70 +56,68 @@ export default function ListaGastos() {
 
   return (
     <Container>
-      <Typography variant="h4" component="h1" align="center" gutterBottom>
-        Gasto
+      <Typography variant="h4" sx={{ mt: 4 }}>
+        Gastos
       </Typography>
-      <form ref={formRef} onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
+      <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+        Gestión de gastos por partida
+      </Typography>
+      <Paper sx={{ p: 3 }}>
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          Nuevo gasto
+        </Typography>
+        <form ref={formRef} onSubmit={handleSubmit}>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
             <TextField
               name="descripcion"
               label="Descripción"
-              fullWidth
-              margin="normal"
               placeholder="Ingrese la descripción"
+              sx={{ flex: "1 1 240px" }}
             />
             <TextField
               name="fecha"
               label="Fecha"
-              fullWidth
-              margin="normal"
               defaultValue={obtenerFechaActual()}
               type="date"
               InputLabelProps={{
                 shrink: true,
               }}
+              sx={{ flex: "1 1 240px" }}
             />
             <TextField
               name="monto"
               label="Monto"
               type="number"
-              fullWidth
-              margin="normal"
               placeholder="Ingrese el monto"
+              sx={{ flex: "1 1 240px" }}
             />
-          </Grid>
-          <Grid item xs={12} sm={6}>
             <TextField
               name="divisa"
               label="Divisa"
-              fullWidth
-              margin="normal"
               placeholder="Ingrese la divisa"
+              sx={{ flex: "1 1 240px" }}
             />
             <TextField
               name="partida_id"
               label="Partida Id"
-              fullWidth
-              margin="normal"
               placeholder="Ingrese el ID de la partida"
+              sx={{ flex: "1 1 240px" }}
             />
-          </Grid>
-        </Grid>
-        <Button type="submit" variant="contained" color="primary">
-          Agregar Gasto
-        </Button>
-      </form>
+          </Box>
+          <Button type="submit" variant="contained" sx={{ mt: 2 }}>
+            Agregar Gasto
+          </Button>
+        </form>
+      </Paper>
       {/* Tabla de gastos */}
-      <TableContainer component={Paper} sx={{ marginTop: 2 }}>
+      <TableContainer component={Paper} sx={{ mt: 3 }}>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell>Gasto Id</TableCell>
               <TableCell>Descripción</TableCell>
               <TableCell>Fecha</TableCell>
-              <TableCell>Monto</TableCell>
-              <TableCell>Divisa</TableCell>
+              <TableCell align="right">Monto</TableCell>
               <TableCell>Partida Id</TableCell>
             </TableRow>
           </TableHead>
@@ -130,17 +127,16 @@ export default function ListaGastos() {
                 key={row.gasto_id}
                 sx={{
                   cursor: "pointer",
-                  "&:hover": {
-                    backgroundColor: "#f5f5f5",
-                  },
+                  "&:last-child td, &:last-child th": { border: 0 },
                 }}
                 onClick={() => navigate(`/gastos/${row.gasto_id}`)}
               >
                 <TableCell>{row.gasto_id}</TableCell>
                 <TableCell>{row.descripcion}</TableCell>
                 <TableCell>{row.fecha}</TableCell>
-                <TableCell>{row.monto}</TableCell>
-                <TableCell>{row.divisa}</TableCell>
+                <TableCell align="right">
+                  {row.monto} {row.divisa}
+                </TableCell>
                 <TableCell>{row.partida_id}</TableCell>
               </TableRow>
             ))}
@@ -148,11 +144,11 @@ export default function ListaGastos() {
         </Table>
       </TableContainer>
       {/* Botones adicionales */}
-      <Box sx={{ marginTop: 2 }}>
-        <Button variant="contained" color="primary" sx={{ marginRight: 2 }}>
+      <Box sx={{ mt: 2, display: "flex", gap: 1.5 }}>
+        <Button variant="outlined">
           Quitar Gasto
         </Button>
-        <Button variant="contained" color="primary">
+        <Button variant="outlined">
           Editar Gasto
         </Button>
       </Box>

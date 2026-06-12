@@ -1,5 +1,12 @@
-import { Typography } from "@mui/material";
 import React, { useState, useEffect } from "react";
+import {
+  Box,
+  Button,
+  Chip,
+  MenuItem,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 const CrearReunion = ({ proyecto_id }) => {
   const [descripcion, setDescripcion] = useState("");
@@ -79,117 +86,80 @@ const CrearReunion = ({ proyecto_id }) => {
   };
 
   return (
-    <form>
-    <div style={{ marginLeft: 16, marginRight: 16 }}>
-      <Typography fontSize="30px">Descripción de la reunion:</Typography>
-      <input
-        type="text"
+    <Box
+      component="form"
+      sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
+    >
+      <TextField
+        label="Descripción de la reunión"
         required
+        fullWidth
         value={descripcion}
         onChange={handleDescripcionChange}
         placeholder="Descripción de la reunión"
-        style={{
-          fontSize: 24,
-          color: "white",
-          background: "#595959",
-          width: "calc(100% - 20px)",
-          padding: "10px",
-        }}
       />
-      <Typography fontSize="30px">Día de la reunion:</Typography>
-      <input
+      <TextField
+        label="Día de la reunión"
         required
         type="date"
         value={dia}
         onChange={handleDiaChange}
-        style={{
-          fontSize: 24,
-          color: "white",
-          background: "#595959",
-          padding: "5px",
-        }}
+        InputLabelProps={{ shrink: true }}
       />
-      <Typography fontSize="30px">Hora de la reunion:</Typography>
-      <input
+      <TextField
+        label="Hora de la reunión"
         required
         type="time"
         value={hora}
         onChange={handleHoraChange}
-        style={{
-          fontSize: 24,
-          color: "white",
-          background: "#595959",
-          padding: "5px",
-        }}
+        InputLabelProps={{ shrink: true }}
       />
-      <div>
-        <Typography fontSize="30px">Lista de Participantes:</Typography>
-        <select
+
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+        <TextField
+          select
+          label="Lista de participantes"
+          fullWidth
           value={selectedEmpleado}
           onChange={handleEmpleadoChange}
-          style={{
-            width: "70%",
-            fontSize: 24,
-            color: "white",
-            background: "#595959",
-            padding: "5px",
-          }}
         >
-          <option value=""></option>
+          <MenuItem value="">
+            <em>Ninguno</em>
+          </MenuItem>
           {empleados.map((empleado, index) => (
-            <option key={index} value={empleado.empleado}>
+            <MenuItem key={index} value={empleado.empleado}>
               {empleado.empleado}
-            </option>
+            </MenuItem>
           ))}
-        </select>
-        <button 
-          type="button"
-          onClick={handleAgregarEmpleado}
-          style={{
-            backgroundColor: "#FFFFFF",
-            color: "#000000",
-            fontSize: "18px",
-            marginLeft: 40,
-            padding: 10,
-            borderRadius: 10,
-          }}
-        >
+        </TextField>
+        <Button type="button" variant="outlined" onClick={handleAgregarEmpleado}>
           Agregar
-        </button>
-        <div>
-          <Typography fontSize="30px">Empleados seleccionados:</Typography>
-          {selectedEmpleados.length === 0 ? (
-            <p fontSize="15px">No se han seleccionado empleados.</p>
-          ) : (
-            <ul style={{ margin: "10px 0" }}>
-              {selectedEmpleados.map((empleado, index) => (
-                <li key={index} style={{ fontSize: "20px", marginTop: "10px" }}>
-                  {empleado}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </div>
-      <button
-        type="submit"
-        onClick={handleCrearReunion}
-        style={{
-          backgroundColor: "#00D16D",
-          color: "#FFFFFF",
-          fontSize: "26px",
-          paddingLeft: "36px",
-          paddingRight: "36px",
-          paddingTop: "6px",
-          paddingBottom: "6px",
-          borderColor: "#00D16D",
-          borderRadius: 10,
-        }}
-      >
-        Crear
-      </button>
-    </div>
-    </form>
+        </Button>
+      </Box>
+
+      <Box>
+        <Typography variant="caption" color="text.secondary">
+          Empleados seleccionados
+        </Typography>
+        {selectedEmpleados.length === 0 ? (
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+            No se han seleccionado empleados.
+          </Typography>
+        ) : (
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 0.5 }}>
+            {selectedEmpleados.map((empleado, index) => (
+              <Chip key={index} label={empleado} size="small" />
+            ))}
+          </Box>
+        )}
+      </Box>
+
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button type="submit" variant="contained" onClick={handleCrearReunion}>
+          Crear
+        </Button>
+      </Box>
+    </Box>
   );
 };
 

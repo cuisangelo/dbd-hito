@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import {
-  Table,
+  Box,
   Button,
+  Container,
+  Paper,
+  Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
   Typography,
-  Paper,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 // añado useParams
@@ -52,254 +54,87 @@ export default function ReporteRecursos() {
   }, [id]);
 
   return (
-    <>
-      <Typography textAlign="center" variant="h4" fontWeight="bold">
-        Reporte de recursos
+    <Container>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mt: 4,
+        }}
+      >
+        <Typography variant="h4">Reporte de recursos</Typography>
+        <Button variant="outlined" onClick={() => navigate("/")}>
+          Volver
+        </Button>
+      </Box>
+      <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+        Recursos asignados al proyecto y sobrantes disponibles
       </Typography>
 
-      <div
-        style={{
-          marginTop: "15px",
-          height: "30px",
-          backgroundColor: "black",
-          marginBottom: "10px",
-          marginRight: "10px",
-          marginLeft: "10px",
-        }}
-      ></div>
-
-      <div
-        style={{
-          marginTop: "15px",
-          height: "50px",
-          backgroundColor: "#ccc",
-          marginBottom: "10px",
-          marginRight: "10px",
-          marginLeft: "10px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div style={{ position: "absolute", top: 0, right: 0, margin: "10px" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => navigate("/")}
-          >
-            Volver
-          </Button>
-        </div>
-
-        <Typography variant="h5">Proyecto</Typography>
-      </div>
-
-      <div
-        style={{
-          backgroundColor: "#ccc",
-          borderRadius: "5px",
-          padding: "10px",
-          margin: "10px",
-          height: "70vh",
-        }}
-      >
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Id
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Recurso
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Tipo
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Proveedor
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Cant. asig.
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Costo
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Cant. disp.
-                </TableCell>
+      <Typography variant="h6" sx={{ mb: 1 }}>
+        Recursos asignados
+      </Typography>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Id</TableCell>
+              <TableCell>Recurso</TableCell>
+              <TableCell>Tipo</TableCell>
+              <TableCell>Proveedor</TableCell>
+              <TableCell align="right">Cant. asig.</TableCell>
+              <TableCell align="right">Costo</TableCell>
+              <TableCell align="right">Cant. disp.</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {datos.map((dato) => (
+              <TableRow key={dato.id}>
+                <TableCell>{dato.id}</TableCell>
+                <TableCell>{dato.recurso}</TableCell>
+                <TableCell>{dato.tipo}</TableCell>
+                <TableCell>{dato.proveedor}</TableCell>
+                <TableCell align="right">{dato["Cant. asig."]}</TableCell>
+                <TableCell align="right">{dato.costo}</TableCell>
+                <TableCell align="right">{dato["Cant. disp."]}</TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {datos.map((dato) => (
-                <TableRow key={dato.id}>
-                  <TableCell sx={{ textAlign: "center" }}>{dato.id}</TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {dato.recurso}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {dato.tipo}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {dato.proveedor}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {dato["Cant. asig."]}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {dato.costo}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {dato["Cant. disp."]}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <br></br>
-        <Typography style={{ fontWeight: "bold" }}>
-          Recursos sobrantes
-        </Typography>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Id
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Recurso
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Tipo
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Proveedor
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Cant. disp.
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Costo
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Cant. total
-                </TableCell>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      <Typography variant="h6" sx={{ mt: 4, mb: 1 }}>
+        Recursos sobrantes
+      </Typography>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Id</TableCell>
+              <TableCell>Recurso</TableCell>
+              <TableCell>Tipo</TableCell>
+              <TableCell>Proveedor</TableCell>
+              <TableCell align="right">Cant. disp.</TableCell>
+              <TableCell align="right">Costo</TableCell>
+              <TableCell align="right">Cant. total</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {sobras.map((sobra) => (
+              <TableRow key={sobra.id}>
+                <TableCell>{sobra.id}</TableCell>
+                <TableCell>{sobra.recurso}</TableCell>
+                <TableCell>{sobra.tipo}</TableCell>
+                <TableCell>{sobra.proveedor}</TableCell>
+                <TableCell align="right">{sobra["Cant. disp"]}</TableCell>
+                <TableCell align="right">{sobra.costo}</TableCell>
+                <TableCell align="right">{sobra["Cant.total"]}</TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {sobras.map((sobra) => (
-                <TableRow key={sobra.id}>
-                  <TableCell sx={{ textAlign: "center" }}>{sobra.id}</TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {sobra.recurso}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {sobra.tipo}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {sobra.proveedor}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {sobra["Cant. disp"]}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {sobra.costo}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {sobra["Cant.total"]}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-    </>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 }

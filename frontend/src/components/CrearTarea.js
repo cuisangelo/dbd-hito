@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Box, Button, Chip, TextField, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 
 
@@ -10,7 +10,7 @@ const CrearTarea = ({proyecto_id}) => {
     const [empleados, setEmpleados] = useState([]);
   const [selectedEmpleados, setSelectedEmpleados] = useState([]);
   const [selectedEmpleado, setSelectedEmpleado] = useState('');
-  
+
   const handleNombreChange = (event) => {
       setNombre(event.target.value);
     };
@@ -18,11 +18,11 @@ const CrearTarea = ({proyecto_id}) => {
   const handleDescripcionChange = (event) => {
       setDescripcion(event.target.value);
     };
-    
+
     const handleDiaChange = (event) => {
         setDia(event.target.value);
     };
-    
+
     const handleHoraChange = (event) => {
         setHora(event.target.value);
     };
@@ -36,13 +36,13 @@ const CrearTarea = ({proyecto_id}) => {
             console.error('Error:', error);
           });
       }, [proyecto_id]);
-    
+
       const handleEmpleadoChange = (event) => {
         const selectedEmpleadoId = event.target.value;
         const selectedEmpleadoObj = empleados.find(
           (empleado) => empleado.usuario_id === parseInt(selectedEmpleadoId)
         );
-      
+
         setSelectedEmpleado(selectedEmpleadoObj);
       };
 
@@ -50,7 +50,7 @@ const CrearTarea = ({proyecto_id}) => {
         if (selectedEmpleado) {
           setSelectedEmpleados([...selectedEmpleados, selectedEmpleado]);
           setSelectedEmpleado(null);
-      
+
           const updatedEmpleados = empleados.filter(
             (empleado) => empleado.usuario_id !== selectedEmpleado.usuario_id
           );
@@ -76,7 +76,7 @@ const CrearTarea = ({proyecto_id}) => {
               usuarioIds: empleadoIds,
           }),
         });
-        
+
         if (response.ok) {
           console.log('Reunión creada correctamente.');
           // Reset the form
@@ -94,66 +94,84 @@ const CrearTarea = ({proyecto_id}) => {
 
   return (
     // Aumento de etiqueta para añadir la propiedad requiered
-    <form> 
-      <input type="text" required value={nombre} onChange={handleNombreChange} placeholder="Nombre" style={{width: 'calc(100% - 10px)', borderColor: '#D9D9D9' ,backgroundColor: '#D9D9D9', color: '#7D7D7D', fontSize: 48, paddingLeft: 10}}/>
-    <div>
-      <div>
-      <Typography fontSize="30px">Encargados:</Typography>
-        <select value={selectedEmpleado} onChange={handleEmpleadoChange} style={{width: '70%', fontSize: 24, color: 'white', background: '#595959', padding: '5px'}}>
-            <option value=""></option>
-            {empleados.map((empleado, index) => (
+    <Box
+      component="form"
+      sx={{ display: "flex", flexDirection: "column", gap: 2, pt: 1 }}
+    >
+      <TextField
+        label="Nombre"
+        required
+        fullWidth
+        value={nombre}
+        onChange={handleNombreChange}
+      />
+      <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+        <TextField
+          select
+          SelectProps={{ native: true }}
+          InputLabelProps={{ shrink: true }}
+          label="Encargados"
+          fullWidth
+          value={selectedEmpleado}
+          onChange={handleEmpleadoChange}
+        >
+          <option value=""></option>
+          {empleados.map((empleado, index) => (
             <option key={index} value={empleado.usuario_id}>
-                {empleado.empleado}
+              {empleado.empleado}
             </option>
-            ))}
-        </select>
-        <button type="button" onClick={handleAgregarEmpleado} style={{
-                                backgroundColor: '#FFFFFF',
-                                color: '#000000',
-                                fontSize: '18px',
-                                marginLeft: 40,
-                                padding: 10,
-                                borderRadius: 10
-                            }}>Agregar</button>
-      <Typography fontSize="30px">Empleados seleccionados:</Typography>
+          ))}
+        </TextField>
+        <Button type="button" variant="outlined" onClick={handleAgregarEmpleado}>
+          Agregar
+        </Button>
+      </Box>
+      <Box>
+        <Typography variant="caption" color="text.secondary">
+          Empleados seleccionados
+        </Typography>
         {selectedEmpleados.length === 0 ? (
-          <p fontSize="15px">No se han seleccionado empleados.</p>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+            No se han seleccionado empleados.
+          </Typography>
         ) : (
-          <ul style={{margin:'10px 0'}}>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 0.5 }}>
             {selectedEmpleados.map((empleado, index) => (
-              <li key={index} style={{ fontSize: '20px', marginTop: '10px' }}>
-                {empleado.empleado}
-              </li>
+              <Chip key={index} label={empleado.empleado} />
             ))}
-          </ul>
+          </Box>
         )}
-      <div>
-        <Typography fontSize="30px">Día de entrega:</Typography>
-      <input required type="date" value={dia} onChange={handleDiaChange} style={{fontSize: 24, color: 'white', background: '#595959', padding: '5px'}} />
-        <Typography fontSize="30px">Hora de entrega:</Typography>
-      <input required type="time" value={hora} onChange={handleHoraChange} style={{fontSize: 24, color: 'white', background: '#595959', padding: '5px'}} />
-        <Typography fontSize="30px">Descripción de la tarea:</Typography>
-      <input type="text" required value={descripcion} onChange={handleDescripcionChange} placeholder="Descripción de la reunión" style={{fontSize: 24,
-      color: 'white', background: '#595959', width: 'calc(100% - 20px)', padding: '10px'}}/>
-      </div>
-        </div>
-        
-    </div>
-      <button type="submit" onClick={handleCrearReunion} style={{
-        position: 'absolute',
-        right: 40,
-        bottom: 40,
-    backgroundColor: '#00D16D',
-    color: '#FFFFFF',
-    fontSize: '26px',
-    paddingLeft: '36px',
-    paddingRight: '36px',
-    paddingTop: '6px',
-    paddingBottom: '6px',
-    borderColor: '#00D16D',
-    borderRadius: 10 
-  }}>Crear</button>
-    </form>
+      </Box>
+      <TextField
+        label="Día de entrega"
+        type="date"
+        required
+        InputLabelProps={{ shrink: true }}
+        value={dia}
+        onChange={handleDiaChange}
+      />
+      <TextField
+        label="Hora de entrega"
+        type="time"
+        required
+        InputLabelProps={{ shrink: true }}
+        value={hora}
+        onChange={handleHoraChange}
+      />
+      <TextField
+        label="Descripción de la tarea"
+        required
+        fullWidth
+        value={descripcion}
+        onChange={handleDescripcionChange}
+        placeholder="Descripción de la reunión"
+      />
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button type="submit" variant="contained" onClick={handleCrearReunion}>
+          Crear
+        </Button>
+      </Box>
+    </Box>
   );
 };
 

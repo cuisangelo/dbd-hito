@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {
+  Box,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogContentText,
   DialogActions,
   Button,
-  Typography,
   TextField
 } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -54,14 +54,14 @@ const DialogAsignarRecurso = ({ open, handleClose, proyecto, empleado }) => {
         setError(null);
     }, [open]);
     return (
-        <Dialog open={ open } onClose={ handleClose }>
+        <Dialog open={ open } onClose={ handleClose } fullWidth maxWidth="xs">
+            <DialogTitle>Asignar empleado</DialogTitle>
             <DialogContent>
-                <Typography>Estás asignando a:</Typography>
-                <Typography fontWeight = "bold">{empleado.concat}</Typography>
-                <Typography>al proyecto:</Typography>
-                <Typography fontWeight = "bold">{proyecto.nombre_proyecto}</Typography>
-                <Typography>Rellena los siguientes campos:</Typography>
-                <Typography>
+                <DialogContentText sx={{ mb: 2 }}>
+                    Estás asignando a <strong>{empleado.concat}</strong> al proyecto{' '}
+                    <strong>{proyecto.nombre_proyecto}</strong>.
+                </DialogContentText>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
                     <TextField
                         label="Horas de trabajo por semana"
                         type="number"
@@ -69,19 +69,21 @@ const DialogAsignarRecurso = ({ open, handleClose, proyecto, empleado }) => {
                         onChange = { handleHorasAsignadasChange }
                         inputProps={{ min: 0 }}
                     />
-                    <DialogContent>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker
-                                value = { fechaFinTrabajo }
-                                onChange = { handleFechaFinTrabajoChange }
-                                format = 'DD/MM/YYYY'
-                            />
-                        </LocalizationProvider>
-                    </DialogContent>
-                </Typography>
-                {error && <DialogContentText color="error">{error}</DialogContentText>}
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                            label="Fecha de fin del trabajo"
+                            value = { fechaFinTrabajo }
+                            onChange = { handleFechaFinTrabajoChange }
+                            format = 'DD/MM/YYYY'
+                        />
+                    </LocalizationProvider>
+                </Box>
+                {error && <DialogContentText color="error" sx={{ mt: 2 }}>{error}</DialogContentText>}
             </DialogContent>
             <DialogActions>
+                <Button onClick={ handleClose }>
+                    Cancelar
+                </Button>
                 <Button
                     variant = 'contained'
                     onClick = { handleConfirm }
@@ -89,24 +91,9 @@ const DialogAsignarRecurso = ({ open, handleClose, proyecto, empleado }) => {
                 >
                     Guardar cambios
                 </Button>
-                <Button
-                    variant = 'contained'
-                    sx = {
-                        {
-                            backgroundColor: 'red',
-                            color: 'white',
-                            '&:hover': {
-                                backgroundColor: 'darkred',
-                            }
-                        }
-                    }
-                    onClick={ handleClose }
-                >
-                    Cancelar
-                </Button>
             </DialogActions>
         </Dialog>
     );
 };
-  
+
 export default DialogAsignarRecurso;

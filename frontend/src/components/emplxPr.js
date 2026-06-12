@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import {
-  Table,
+  Box,
   Button,
+  Container,
+  Paper,
+  Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
   Typography,
-  Paper,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -34,96 +36,42 @@ export default function EmpleaxProyecto() {
   }, [id]);
 
   return (
-    <>
-      <Typography textAlign="center" variant="h4" fontWeight="bold">
-        Horas reportadas por empleado
+    <Container>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mt: 4,
+        }}
+      >
+        <Typography variant="h4">Horas reportadas por empleado</Typography>
+        <Button variant="outlined" onClick={() => navigate("/")}>
+          Volver
+        </Button>
+      </Box>
+      <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+        Horas reportadas por cada empleado en el proyecto
       </Typography>
 
-      <div
-        style={{
-          marginTop: "15px",
-          height: "30px",
-          backgroundColor: "black",
-          marginBottom: "10px",
-          marginRight: "10px",
-          marginLeft: "10px",
-        }}
-      ></div>
-
-      <div
-        style={{
-          marginTop: "15px",
-          height: "50px",
-          backgroundColor: "#ccc",
-          marginBottom: "10px",
-          marginRight: "10px",
-          marginLeft: "10px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div style={{ position: "absolute", top: 0, right: 0, margin: "10px" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => navigate("/")}
-          >
-            Volver
-          </Button>
-        </div>
-
-        <Typography variant="h5">Proyecto</Typography>
-      </div>
-
-      <div
-        style={{
-          backgroundColor: "#ccc",
-          borderRadius: "5px",
-          padding: "10px",
-          margin: "10px",
-          height: "70vh",
-        }}
-      >
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Empleado
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Horas empleadas
-                </TableCell>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Empleado</TableCell>
+              <TableCell align="right">Horas empleadas</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {datos.map((dato) => (
+              <TableRow key={dato.id}>
+                <TableCell>{dato.Empleado}</TableCell>
+                <TableCell align="right">{dato["Horas empleadas"]}</TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {datos.map((dato) => (
-                <TableRow key={dato.id}>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {dato.Empleado}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {dato["Horas empleadas"]}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-    </>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 }

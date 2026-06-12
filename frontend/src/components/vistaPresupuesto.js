@@ -11,7 +11,7 @@ import {
   Button,
   TextField,
   Box,
-  Grid,
+  Chip,
   Typography
 } from "@mui/material";
 
@@ -59,84 +59,80 @@ export default function ListaPresupuestos() {
 
   return (
     <Container>
-        <Typography variant="h4" component="h1" align="center" gutterBottom>
-        Presupuesto
+      <Typography variant="h4" sx={{ mt: 4 }}>
+        Presupuestos
       </Typography>
-      <form ref={formRef} onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
+      <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+        Gestión de presupuestos por proyecto
+      </Typography>
+      <Paper sx={{ p: 3 }}>
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          Nuevo presupuesto
+        </Typography>
+        <form ref={formRef} onSubmit={handleSubmit}>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
             <TextField
               name="descripcion_presupuesto"
               label="Descripción"
-              fullWidth
-              margin="normal"
               placeholder="Ingrese la descripción"
+              sx={{ flex: "1 1 240px" }}
             />
             <TextField
               name="fecha_creacion_presupuesto"
               label="Fecha creación"
-              fullWidth
-              margin="normal"
               defaultValue={obtenerFechaActual()}
               type="date"
               InputLabelProps={{
                 shrink: true,
               }}
+              sx={{ flex: "1 1 240px" }}
             />
             <TextField
               name="monto_presupuesto"
               label="Monto"
               type="number"
-              fullWidth
-              margin="normal"
               placeholder="Ingrese el monto"
+              sx={{ flex: "1 1 240px" }}
             />
-          </Grid>
-          <Grid item xs={12} sm={6}>
             <TextField
               name="divisa_presupuesto"
               label="Divisa"
-              fullWidth
-              margin="normal"
               placeholder="Ingrese la divisa"
+              sx={{ flex: "1 1 240px" }}
             />
             <TextField
               name="porcentaje_usado"
               label="Uso"
-              fullWidth
-              margin="normal"
               placeholder="Ingrese el porcentaje de uso"
+              sx={{ flex: "1 1 240px" }}
             />
             <TextField
               name="estado_presupuesto"
               label="Estado"
-              fullWidth
-              margin="normal"
               placeholder="Ingrese el estado"
+              sx={{ flex: "1 1 240px" }}
             />
             <TextField
               name="proyecto_id"
               label="Proyecto Id"
-              fullWidth
-              margin="normal"
               placeholder="Ingrese el ID del proyecto"
+              sx={{ flex: "1 1 240px" }}
             />
-          </Grid>
-        </Grid>
-        <Button type="submit" variant="contained" color="primary">
-          Agregar Presupuesto
-        </Button>
-      </form>
+          </Box>
+          <Button type="submit" variant="contained" sx={{ mt: 2 }}>
+            Agregar Presupuesto
+          </Button>
+        </form>
+      </Paper>
       {/* Tabla de presupuestos */}
-      <TableContainer component={Paper} sx={{ marginTop: 2 }}>
+      <TableContainer component={Paper} sx={{ mt: 3 }}>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell>Presupuesto Id</TableCell>
               <TableCell>Descripción</TableCell>
               <TableCell>Fecha creación</TableCell>
-              <TableCell>Monto</TableCell>
-              <TableCell>Divisa</TableCell>
+              <TableCell align="right">Monto</TableCell>
               <TableCell>Uso</TableCell>
               <TableCell>Estado</TableCell>
               <TableCell>Proyecto Id</TableCell>
@@ -148,19 +144,20 @@ export default function ListaPresupuestos() {
                 key={row.presupuesto_id}
                 sx={{
                   cursor: "pointer",
-                  "&:hover": {
-                    backgroundColor: "#f5f5f5",
-                  },
+                  "&:last-child td, &:last-child th": { border: 0 },
                 }}
                 onClick={() => navigate(`/proyecto/${id}/presupuestos/${row.presupuesto_id}/partidas`)}
               >
                 <TableCell>{row.presupuesto_id}</TableCell>
                 <TableCell>{row.descripcion_presupuesto}</TableCell>
                 <TableCell>{row.fecha_creacion_presupuesto}</TableCell>
-                <TableCell>{row.monto_presupuesto}</TableCell>
-                <TableCell>{row.divisa_presupuesto}</TableCell>
+                <TableCell align="right">
+                  {row.monto_presupuesto} {row.divisa_presupuesto}
+                </TableCell>
                 <TableCell>{row.porcentaje_usado}</TableCell>
-                <TableCell>{row.estado_presupuesto}</TableCell>
+                <TableCell>
+                  <Chip size="small" label={row.estado_presupuesto} />
+                </TableCell>
                 <TableCell>{row.proyecto_id}</TableCell>
               </TableRow>
             ))}
@@ -168,11 +165,11 @@ export default function ListaPresupuestos() {
         </Table>
       </TableContainer>
       {/* Botones adicionales */}
-      <Box sx={{ marginTop: 2 }}>
-        <Button variant="contained" color="primary" sx={{ marginRight: 2 }}>
+      <Box sx={{ mt: 2, display: "flex", gap: 1.5 }}>
+        <Button variant="outlined">
           Quitar Presupuesto
         </Button>
-        <Button variant="contained" color="primary">
+        <Button variant="outlined">
           Editar Presupuesto
         </Button>
       </Box>

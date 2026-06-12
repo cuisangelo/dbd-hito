@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import {
+  Box,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogContentText,
   DialogActions,
   Button,
-  Typography,
   TextField
 } from '@mui/material';
 
@@ -36,22 +36,28 @@ const DialogEditarRecurso = ({ open, handleClose, proyecto, recurso }) => {
         }
     };
     return (
-        <Dialog open={ open } onClose={ handleClose }>
+        <Dialog open={ open } onClose={ handleClose } fullWidth maxWidth="xs">
+            <DialogTitle>Editar cantidad asignada</DialogTitle>
             <DialogContent>
-                <Typography>Estás editando la cantidad de:</Typography>
-                <Typography fontWeight = "bold">{recurso.nombre}</Typography>
-                <Typography>asignada al proyecto:</Typography>
-                <Typography fontWeight = "bold">{proyecto.nombre_proyecto}</Typography>
-                <Typography>Establece la nueva cantidad asignada:</Typography>
-                <TextField
-                    label="Cantidad"
-                    type="number"
-                    value = { nuevaCantidad }
-                    onChange = { handleCantidadChange }
-                    inputProps={{ min: 0 }}
-                />
+                <DialogContentText sx={{ mb: 2 }}>
+                    Estás editando la cantidad de <strong>{recurso.nombre}</strong> asignada
+                    al proyecto <strong>{proyecto.nombre_proyecto}</strong>.
+                </DialogContentText>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
+                    <TextField
+                        label="Cantidad"
+                        type="number"
+                        value = { nuevaCantidad }
+                        onChange = { handleCantidadChange }
+                        inputProps={{ min: 0 }}
+                    />
+                </Box>
+                {error && <DialogContentText color="error" sx={{ mt: 2 }}>{error}</DialogContentText>}
             </DialogContent>
             <DialogActions>
+                <Button onClick = { handleClose }>
+                    Cancelar
+                </Button>
                 <Button
                     variant = 'contained'
                     color = 'primary'
@@ -59,24 +65,9 @@ const DialogEditarRecurso = ({ open, handleClose, proyecto, recurso }) => {
                 >
                     Guardar cambios
                 </Button>
-                <Button
-                    variant = 'contained'
-                    sx = {
-                        {
-                            backgroundColor: 'red',
-                            color: 'white',
-                            '&:hover': {
-                                backgroundColor: 'darkred',
-                            }
-                        }
-                    }
-                    onClick = { handleClose }
-                >
-                    Cancelar
-                </Button>
             </DialogActions>
         </Dialog>
     );
 };
-  
+
 export default DialogEditarRecurso;

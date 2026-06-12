@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import {
-  Table,
+  Box,
   Button,
+  Container,
+  Paper,
+  Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
   Typography,
-  Paper,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -34,144 +36,50 @@ export default function Objetivos() {
   }, [id]);
 
   return (
-    <>
-      <Typography textAlign="center" variant="h4" fontWeight="bold">
-        Reporte de objetivos
+    <Container>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mt: 4,
+        }}
+      >
+        <Typography variant="h4">Reporte de objetivos</Typography>
+        <Button variant="outlined" onClick={() => navigate("/")}>
+          Volver
+        </Button>
+      </Box>
+      <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+        Hitos del proyecto con sus fechas y observaciones
       </Typography>
 
-      <div
-        style={{
-          marginTop: "15px",
-          height: "30px",
-          backgroundColor: "black",
-          marginBottom: "10px",
-          marginRight: "10px",
-          marginLeft: "10px",
-        }}
-      ></div>
-
-      <div
-        style={{
-          marginTop: "15px",
-          height: "50px",
-          backgroundColor: "#ccc",
-          marginBottom: "10px",
-          marginRight: "10px",
-          marginLeft: "10px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div style={{ position: "absolute", top: 0, right: 0, margin: "10px" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => navigate("/")}
-          >
-            Volver
-          </Button>
-        </div>
-
-        <Typography variant="h5">Proyecto</Typography>
-      </div>
-
-      <div
-        style={{
-          backgroundColor: "#ccc",
-          borderRadius: "5px",
-          padding: "10px",
-          margin: "10px",
-          height: "70vh",
-        }}
-      >
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Id
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Nombre del hito
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Descripción del hito
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Fecha inicio del hito
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Fecha final del hito
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    color: "#FFFFFF",
-                    textAlign: "center",
-                  }}
-                >
-                  Observación
-                </TableCell>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Id</TableCell>
+              <TableCell>Nombre del hito</TableCell>
+              <TableCell>Descripción del hito</TableCell>
+              <TableCell>Fecha inicio del hito</TableCell>
+              <TableCell>Fecha final del hito</TableCell>
+              <TableCell>Observación</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {objetivos.map((objetivo) => (
+              <TableRow key={objetivo.id}>
+                <TableCell>{objetivo["ID"]}</TableCell>
+                <TableCell>{objetivo["Nombre del hito"]}</TableCell>
+                <TableCell>{objetivo["Descripcion del hito"]}</TableCell>
+                <TableCell>{objetivo["Fecha inicio del hito"]}</TableCell>
+                <TableCell>{objetivo["Fecha final del hito"]}</TableCell>
+                <TableCell>{objetivo.Observacion}</TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {objetivos.map((objetivo) => (
-                <TableRow key={objetivo.id}>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {objetivo["ID"]}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {objetivo["Nombre del hito"]}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {objetivo["Descripcion del hito"]}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {objetivo["Fecha inicio del hito"]}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {objetivo["Fecha final del hito"]}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {objetivo.Observacion}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-    </>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 }

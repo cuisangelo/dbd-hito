@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
-  Typography,
-  Table,
-  TableRow,
-  TableCell,
-  TableBody,
-  Paper,
+  Box,
   Button,
+  Chip,
+  Container,
+  Divider,
+  List,
+  ListItemButton,
+  ListItemText,
+  Paper,
+  Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -46,324 +49,140 @@ const Proyecto = () => {
   const fechaFinalizacionFix = fecha_finalizacion_estimada.substring(0, 10);
 
   return (
-    <Paper
-      style={{
-        padding: "30px",
-        borderRadius: "10px",
-        backgroundColor: "#D9D9D9",
-        margin: "36px",
-      }}
-    >
-      <Typography variant="h5" style={{ fontSize: "48px", margin: "20px" }}>
+    <Container>
+      <Typography variant="h4" sx={{ mt: 4 }}>
         {nombre_proyecto}
       </Typography>
-      <Table>
-        <TableRow
-          style={{
-            marginLeft: 20,
-            width: "100%",
-            display: "flex",
-            justifyContent: "flex-start",
-          }}
+      <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+        Cliente: {nombre_cliente}
+      </Typography>
+
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5, mb: 3 }}>
+        <Button variant="outlined" to="/detalles-proyecto">
+          Detalles
+        </Button>
+        <Button variant="outlined" to="/hitos">
+          Hitos
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={() =>
+            navigate(`/lista-proyectos/${id}/asignaciones-recursos`)
+          }
         >
-          <TableCell
-            component={Button}
-            variant="contained"
-            color="primary"
-            style={{
-              fontSize: "20px",
-              marginTop: "8px",
-              padding: "8px 24px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Button
-              to="/detalles-proyecto"
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              Detalles
-            </Button>
-          </TableCell>
-          <TableCell
-            component={Button}
-            variant="contained"
-            color="primary"
-            style={{
-              fontSize: "20px",
-              marginTop: "8px",
-              padding: "8px 24px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Button
-              to="/hitos"
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              Hitos
-            </Button>
-          </TableCell>
-          <TableCell
-            component={Button}
-            variant="contained"
-            color="primary"
-            style={{
-              fontSize: "20px",
-              marginTop: "8px",
-              padding: "8px 24px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Button
-              onClick={() =>
-                navigate(`/lista-proyectos/${id}/asignaciones-recursos`)
-              }
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              Asignaciones
-            </Button>
-          </TableCell>
-          <TableCell
-            component={Button}
-            variant="contained"
-            color="primary"
-            style={{
-              fontSize: "20px",
-              marginTop: "8px",
-              padding: "8px 24px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Button
-              onClick={() => navigate(`/proyecto/${id}/presupuestos`)}
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              Presupuesto
-            </Button>
-          </TableCell>
-
-          <TableCell
-            component={Button}
-            variant="contained"
-            color="primary"
-            style={{
-              fontSize: "20px",
-              marginTop: "8px",
-              padding: "8px 24px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Button
-              onClick={() => navigate(`/proyecto/${id}/tareas`)}
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              Tareas
-            </Button>
-          </TableCell>
-          <TableCell
-            component={Button}
-            variant="contained"
-            color="primary"
-            style={{
-              fontSize: "20px",
-              marginTop: "8px",
-              padding: "8px 24px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Button
-              onClick={() => navigate(`/proyecto/${id}/reuniones`)}
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              Reuniones
-            </Button>
-          </TableCell>
-          <TableCell
-            component={Button}
-            variant="contained"
-            color="primary"
-            style={{
-              fontSize: "20px",
-              marginTop: "8px",
-              padding: "8px 24px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          ></TableCell>
-        </TableRow>
-      </Table>
-      <Paper
-        style={{
-          width: "calc(100% - 36px)",
-          height: "calc(100% - 190px)",
-          padding: 18,
-          backgroundColor: "#ECECEC",
-          display: "flex",
-        }}
-      >
-        <div style={{ flex: 1 }}>
-          <Typography variant="h6">Cliente:</Typography>
-          <Typography
-            style={{
-              width: "calc(100% - 32px)",
-              marginTop: 6,
-              backgroundColor: "#D9D9D9",
-              paddingLeft: 10,
-              fontSize: 20,
-            }}
-          >
-            {nombre_cliente}
-          </Typography>
-
-          <Typography variant="h6" marginTop="17px">
-            Fecha de creación:
-          </Typography>
-          <Typography
-            style={{
-              width: "calc(100% - 32px)",
-              marginTop: 6,
-              backgroundColor: "#D9D9D9",
-              paddingLeft: 10,
-              fontSize: 20,
-            }}
-          >
-            {fechaCreacionFix}
-          </Typography>
-
-          <Typography variant="h6" marginTop="17px">
-            Fecha de finalización:
-          </Typography>
-          <Typography
-            style={{
-              width: "calc(100% - 32px)",
-              marginTop: 6,
-              backgroundColor: "#D9D9D9",
-              paddingLeft: 10,
-              fontSize: 20,
-            }}
-          >
-            {fechaFinalizacionFix}
-          </Typography>
-          <Typography variant="h6" marginTop="17px">
-            Descripción:
-          </Typography>
-          <Typography
-            style={{
-              width: "calc(100% - 32px)",
-              marginTop: 6,
-              backgroundColor: "#D9D9D9",
-              paddingLeft: 10,
-              fontSize: 20,
-            }}
-          >
-            {descripcion_proyecto}
-          </Typography>
-          <Typography variant="h6" marginTop="17px">
-            Hardware:
-          </Typography>
-          <div style={{ display: "flex", flexWrap: "wrap" }}>
-            {hardware.map((hardware, index) => (
-              <div
-                key={index}
-                style={{
-                  width: "calc(100% - 22px)",
-                  marginTop: 6,
-                  backgroundColor: "#D9D9D9",
-                }}
-              >
-                <Typography style={{ paddingLeft: 10, fontSize: 20 }}>
-                  {hardware.recurso_hardware}
-                </Typography>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div
-          style={{ flex: 1, borderLeft: "1px solid #000000", paddingLeft: 11 }}
+          Asignaciones
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={() => navigate(`/proyecto/${id}/presupuestos`)}
         >
-          <Typography variant="h6">Jefe de Proyecto:</Typography>
-          <Typography
-            style={{
-              flex: "1 0 100%",
-              marginTop: 6,
-              backgroundColor: "#D9D9D9",
-              paddingLeft: 10,
-              fontSize: 20,
-            }}
-          >
-            {jefe_proyecto}
-          </Typography>
-          <Typography variant="h6" marginTop="17px">
-            Desarrolladores:
-          </Typography>
-          <div style={{ display: "flex", flexWrap: "wrap" }}>
-            {desarrolladores.map((desarrollador, index) => (
-              <div
-                key={index}
-                style={{
-                  flex: "1 0 100%",
-                  marginTop: 6,
-                  backgroundColor: "#D9D9D9",
-                }}
-              >
-                <Typography style={{ paddingLeft: 10, fontSize: 20 }}>
-                  {desarrollador.desarrolladores}
-                </Typography>
-              </div>
-            ))}
-          </div>
-          <Typography variant="h6" marginTop="17px">
-            Software:
-          </Typography>
-          <div style={{ display: "flex", flexWrap: "wrap" }}>
-            {software.map((software, index) => (
-              <div
-                key={index}
-                style={{
-                  flex: "1 0 100%",
-                  margin: 6,
-                  backgroundColor: "#D9D9D9",
-                }}
-              >
-                <Typography style={{ paddingLeft: 10, fontSize: 20 }}>
-                  {software.recurso_software}
-                </Typography>
-              </div>
-            ))}
-          </div>
-          <Typography variant="h6" marginTop="17px">
-            Adjuntos:
-          </Typography>
-          <div style={{ display: "flex", flexWrap: "wrap" }}>
-            {adjuntos.map((adjuntos, index) => (
-              <div
-                key={index}
-                style={{
-                  flex: "1 0 100%",
-                  marginTop: 6,
-                  backgroundColor: "#D9D9D9",
-                }}
-              >
-                <Link
-                  to={adjuntos.adjunto_link}
-                  target="_blank"
-                  download={adjuntos.nombre_adjunto}
-                >
-                  <Typography style={{ paddingLeft: 10, fontSize: 20 }}>
-                    {adjuntos.nombre_adjunto}
-                  </Typography>
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
+          Presupuesto
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={() => navigate(`/proyecto/${id}/tareas`)}
+        >
+          Tareas
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={() => navigate(`/proyecto/${id}/reuniones`)}
+        >
+          Reuniones
+        </Button>
+      </Box>
+
+      <Paper sx={{ p: 3, mb: 3 }}>
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          Información general
+        </Typography>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+          <Box>
+            <Typography variant="caption" color="text.secondary">
+              Cliente
+            </Typography>
+            <Typography variant="body1">{nombre_cliente}</Typography>
+          </Box>
+          <Box>
+            <Typography variant="caption" color="text.secondary">
+              Fecha de creación
+            </Typography>
+            <Typography variant="body1">{fechaCreacionFix}</Typography>
+          </Box>
+          <Box>
+            <Typography variant="caption" color="text.secondary">
+              Fecha de finalización
+            </Typography>
+            <Typography variant="body1">{fechaFinalizacionFix}</Typography>
+          </Box>
+          <Box>
+            <Typography variant="caption" color="text.secondary">
+              Jefe de proyecto
+            </Typography>
+            <Typography variant="body1">{jefe_proyecto}</Typography>
+          </Box>
+        </Box>
+        <Divider sx={{ my: 2 }} />
+        <Typography variant="caption" color="text.secondary">
+          Descripción
+        </Typography>
+        <Typography variant="body1">{descripcion_proyecto}</Typography>
       </Paper>
-    </Paper>
+
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 3, mb: 3 }}>
+        <Paper sx={{ p: 3, flex: 1, minWidth: 280 }}>
+          <Typography variant="h6" sx={{ mb: 2 }}>
+            Desarrolladores
+          </Typography>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+            {desarrolladores.map((desarrollador, index) => (
+              <Chip key={index} label={desarrollador.desarrolladores} />
+            ))}
+          </Box>
+        </Paper>
+        <Paper sx={{ p: 3, flex: 1, minWidth: 280 }}>
+          <Typography variant="h6" sx={{ mb: 2 }}>
+            Recursos
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            Hardware
+          </Typography>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 0.5, mb: 2 }}>
+            {hardware.map((item, index) => (
+              <Chip key={index} label={item.recurso_hardware} />
+            ))}
+          </Box>
+          <Typography variant="caption" color="text.secondary">
+            Software
+          </Typography>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 0.5 }}>
+            {software.map((item, index) => (
+              <Chip key={index} label={item.recurso_software} />
+            ))}
+          </Box>
+        </Paper>
+      </Box>
+
+      <Paper sx={{ p: 3, mb: 4 }}>
+        <Typography variant="h6" sx={{ mb: 1 }}>
+          Adjuntos
+        </Typography>
+        <List disablePadding>
+          {adjuntos.map((adjunto, index) => (
+            <ListItemButton
+              key={index}
+              component={Link}
+              to={adjunto.adjunto_link}
+              target="_blank"
+              download={adjunto.nombre_adjunto}
+              sx={{ borderRadius: 2 }}
+            >
+              <ListItemText primary={adjunto.nombre_adjunto} />
+            </ListItemButton>
+          ))}
+        </List>
+      </Paper>
+    </Container>
   );
 };
 

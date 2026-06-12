@@ -1,9 +1,9 @@
-
+import { Typography } from "@mui/material";
 
 export const tareasColumna = () =>{
 
     return(
-        <h1>b</h1>
+        <Typography variant="h6">b</Typography>
     );
 
 }

@@ -7,7 +7,6 @@ import {
   DialogContentText,
   DialogActions,
   Button,
-  Typography,
   TextField
 } from '@mui/material';
 
@@ -27,40 +26,24 @@ const DialogQuitarEmpleado = ({ open, handleClose, proyecto, empleado }) => {
         handleClose();
     };
     return (
-        <Dialog open = { open } onClose = { handleClose }>
+        <Dialog open = { open } onClose = { handleClose } fullWidth maxWidth="xs">
+            <DialogTitle>Quitar empleado</DialogTitle>
             <DialogContent>
-                <Typography
-                    variant='body1'
-                    style={{ fontSize: '20px',color: 'red', fontWeight: 'bold' }}
-                >
-                    ¿Estás seguro de que deseas quitar al empleado
-                </Typography>
-                <Typography fontWeight = "bold">{empleado.concat}</Typography>
-                <Typography>asignado al proyecto:</Typography>
-                <Typography fontWeight = "bold">{proyecto.nombre_proyecto}</Typography>
+                <DialogContentText>
+                    ¿Seguro que deseas quitar al empleado <strong>{empleado.concat}</strong>{' '}
+                    asignado al proyecto <strong>{proyecto.nombre_proyecto}</strong>?
+                </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button
-                    variant = 'contained'
-                    color = 'primary'
-                    onClick={ handleConfirm }
-                >
-                    Confirmar
+                <Button onClick={handleClose}>
+                    Cancelar
                 </Button>
                 <Button
                     variant = 'contained'
-                    sx = {
-                        {
-                            backgroundColor: 'red',
-                            color: 'white',
-                            '&:hover': {
-                                backgroundColor: 'darkred',
-                            }
-                        }
-                    }
-                    onClick={handleClose}
+                    color = 'error'
+                    onClick={ handleConfirm }
                 >
-                    Cancelar
+                    Confirmar
                 </Button>
             </DialogActions>
         </Dialog>

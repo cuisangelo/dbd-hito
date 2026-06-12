@@ -1,12 +1,8 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
-import { Button, Container, List, ListItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-import { FormGroup,
-	FormControlLabel,
-	Checkbox,
-	FormHelperText
-} from '@mui/material';
+import { Box, Button, Container, List, ListItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Checkbox, FormHelperText } from '@mui/material';
 import DialogAsignarEmpleado from './DialogAsignarEmpleado';
 import DialogQuitarEmpleado from './DialogQuitarEmpleado';
 import { styled } from '@mui/material/styles';
@@ -74,29 +70,34 @@ export default function VerProyectoAsignacionesEmpleados() {
 	};
 	return (
 		<Container>
-			<Button style={{ margin: '1rem', fontSize: '2rem' }} variant = 'contained' onClick={() => navigate(`/lista-proyectos/${params.id}/asignaciones-recursos`)}>
-				Recursos
-			</Button>
-			<Button style={{ margin: '1rem', fontSize: '2rem' }} variant = 'contained' onClick={() => navigate(`/lista-proyectos/${params.id}/asignaciones-empleados`)}>
-				Empleados
-			</Button>
-			{
-				proyectoSeleccionado && (
-					<Typography style={{ marginTop: '1rem', marginBottom: '1rem', fontWeight: 'bold', fontSize: '4rem', fontFamily: 'monospace' }}>
-						{proyectoSeleccionado.nombre_proyecto}
-					</Typography>
-				)
-			}
-			<Typography style={{ marginTop: '1rem', marginBottom: '1rem', fontSize: '2rem', fontFamily: 'monospace' }}>Empleados asignados al proyecto</Typography>
-			<TableContainer component={Paper}>
-				<Table>
-						<TableHead sx = {{ backgroundColor: '#4285F4' }}>
-							<TableCell sx = {{ color: '#FFFFFF', fontWeight: 'bold', fontSize: '1.4rem', textAlign: 'center' }}>Id</TableCell>
-							<TableCell sx = {{ color: '#FFFFFF', fontWeight: 'bold', fontSize: '1.4rem', textAlign: 'center' }}>Empleado</TableCell>
-							<TableCell sx = {{ color: '#FFFFFF', fontWeight: 'bold', fontSize: '1.4rem', textAlign: 'center' }}>Especialidad</TableCell>
-							<TableCell sx = {{ color: '#FFFFFF', fontWeight: 'bold', fontSize: '1.4rem', textAlign: 'center' }}>Horas por semana</TableCell>
-							<TableCell>
-							</TableCell>
+			<Typography variant="h4" sx={{ mt: 4 }}>
+				{proyectoSeleccionado ? proyectoSeleccionado.nombre_proyecto : 'Proyecto'}
+			</Typography>
+			<Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+				Gestión de empleados asignados al proyecto
+			</Typography>
+			<Box sx={{ display: 'flex', gap: 1.5 }}>
+				<Button size="small" variant="outlined" onClick={() => navigate(`/lista-proyectos/${params.id}/asignaciones-recursos`)}>
+					Recursos
+				</Button>
+				<Button size="small" variant="contained" onClick={() => navigate(`/lista-proyectos/${params.id}/asignaciones-empleados`)}>
+					Empleados
+				</Button>
+			</Box>
+			<Box sx={{ mt: 4 }}>
+				<Typography variant="h6" sx={{ mb: 2 }}>
+					Empleados asignados al proyecto
+				</Typography>
+				<TableContainer component={Paper}>
+					<Table>
+						<TableHead>
+							<TableRow>
+								<TableCell>Id</TableCell>
+								<TableCell>Empleado</TableCell>
+								<TableCell>Especialidad</TableCell>
+								<TableCell align="right">Horas por semana</TableCell>
+								<TableCell padding="checkbox" />
+							</TableRow>
 						</TableHead>
 						<TableBody>
 							{
@@ -104,76 +105,79 @@ export default function VerProyectoAsignacionesEmpleados() {
 									<TableRow key={row.empleado_id} sx={
 										{'&:last-child td, &:last-child th': { border: 0 }}
 									}>
-										<TableCell sx = {{ fontSize: '1.2rem', textAlign: 'center' }}>{row.empleado_id}</TableCell>
-										<TableCell sx = {{ fontSize: '1.2rem', textAlign: 'center' }}>{row.concat}</TableCell>
-										<TableCell sx = {{ fontSize: '1.2rem', textAlign: 'center' }}>{row.especialidad}</TableCell>
-										<TableCell sx = {{ fontSize: '1.2rem', textAlign: 'center' }}>{row.horas_asignadas_trabajo}</TableCell>
-										<TableCell>
-											<FormGroup>
-												<FormControlLabel
-													control={
-														<Checkbox
-															checked = {selectedEmpleadoId === row.empleado_id}
-															onChange = {() => handleCheckBoxChange(row.empleado_id)}
-														/>
-													}
-												/>
-											</FormGroup>
+										<TableCell>{row.empleado_id}</TableCell>
+										<TableCell>{row.concat}</TableCell>
+										<TableCell>{row.especialidad}</TableCell>
+										<TableCell align="right">{row.horas_asignadas_trabajo}</TableCell>
+										<TableCell padding="checkbox">
+											<Checkbox
+												checked = {selectedEmpleadoId === row.empleado_id}
+												onChange = {() => handleCheckBoxChange(row.empleado_id)}
+											/>
 										</TableCell>
 									</TableRow>
-							))}	
+							))}
 						</TableBody>
-				</Table>			
-			</TableContainer>
-			<Typography style={{ marginTop: '1rem', marginBottom: '1rem', fontSize: '2rem', fontFamily: 'monospace' }}>Empleados disponibles</Typography>
-			<TableContainer component={Paper}>
-				<Table>
-						<TableHead sx = {{ backgroundColor: '#4285F4' }}>
-							<TableCell sx = {{ color: '#FFFFFF', fontWeight: 'bold', fontSize: '1.4rem', textAlign: 'center' }}>Id</TableCell>
-							<TableCell sx = {{ color: '#FFFFFF', fontWeight: 'bold', fontSize: '1.4rem', textAlign: 'center' }}>Empleado</TableCell>
-							<TableCell sx = {{ color: '#FFFFFF', fontWeight: 'bold', fontSize: '1.4rem', textAlign: 'center' }}>Especialidad</TableCell>
-							<TableCell sx = {{ color: '#FFFFFF', fontWeight: 'bold', fontSize: '1.4rem', textAlign: 'center' }}>Horas disponibles por semana</TableCell>
-							<TableCell sx = {{ color: '#FFFFFF', fontWeight: 'bold', fontSize: '1.4rem', textAlign: 'center' }}>Salario por hora</TableCell>	
-							<TableCell>
-							</TableCell>
+					</Table>
+				</TableContainer>
+			</Box>
+			<Box sx={{ mt: 4 }}>
+				<Typography variant="h6" sx={{ mb: 2 }}>
+					Empleados disponibles
+				</Typography>
+				<TableContainer component={Paper}>
+					<Table>
+						<TableHead>
+							<TableRow>
+								<TableCell>Id</TableCell>
+								<TableCell>Empleado</TableCell>
+								<TableCell>Especialidad</TableCell>
+								<TableCell align="right">Horas disponibles por semana</TableCell>
+								<TableCell align="right">Salario por hora</TableCell>
+								<TableCell padding="checkbox" />
+							</TableRow>
 						</TableHead>
-						<TableBody sx={{ maxWidth: '50px' }}>
+						<TableBody>
 							{
 								empleadosDisponibles.map(row => (
 									<TableRow key={row.empleado_id} sx={
 										{'&:last-child td, &:last-child th': { border: 0 }}
 									}>
-										<TableCell sx = {{ fontSize: '1.2rem', textAlign: 'center' }}>{row.empleado_id}</TableCell>
-										<TableCell sx = {{ fontSize: '1.2rem', textAlign: 'center' }}>{row.concat}</TableCell>
-										<TableCell sx = {{ fontSize: '1.2rem', textAlign: 'center' }}>{row.especialidad}</TableCell>
-										<TableCell sx = {{ fontSize: '1.2rem', textAlign: 'center' }}>{row.total_horas_disponibles}</TableCell>
-										<TableCell sx = {{ fontSize: '1.2rem', textAlign: 'center' }}>{row.salario_hora}</TableCell>
-										<TableCell>
-											<FormGroup>
-												<FormControlLabel
-													control={
-														<Checkbox
-															checked = {selectedEmpleadoId === row.empleado_id}
-															onChange={() => handleCheckBoxChange(row.empleado_id)}
-														/>
-													}
-												/>
-											</FormGroup>
+										<TableCell>{row.empleado_id}</TableCell>
+										<TableCell>{row.concat}</TableCell>
+										<TableCell>{row.especialidad}</TableCell>
+										<TableCell align="right">{row.total_horas_disponibles}</TableCell>
+										<TableCell align="right">{row.salario_hora}</TableCell>
+										<TableCell padding="checkbox">
+											<Checkbox
+												checked = {selectedEmpleadoId === row.empleado_id}
+												onChange={() => handleCheckBoxChange(row.empleado_id)}
+											/>
 										</TableCell>
 									</TableRow>
 							))}
 						</TableBody>
-				</Table>
-			</TableContainer>
-			<Button
-				variant	= "contained"
-				color = "success"
-				disabled = { isButtonAsignarDisabled }
-				onClick = { handleAsignarButtonClick }
-				style={{ margin: '1rem' }}
-			>
-				Asignar empleado
-			</Button>
+					</Table>
+				</TableContainer>
+			</Box>
+			<Box sx={{ display: 'flex', gap: 1.5, mt: 3, mb: 4 }}>
+				<Button
+					variant	= "contained"
+					color = "success"
+					disabled = { isButtonAsignarDisabled }
+					onClick = { handleAsignarButtonClick }
+				>
+					Asignar empleado
+				</Button>
+				<Button
+					variant	= "outlined"
+					color = "error"
+					disabled = { isButtonQuitarDisabled }
+					onClick = { handleQuitarButtonClick }
+				>
+					Quitar empleado
+				</Button>
+			</Box>
 			{
 				openAsignarDialog && (
 					<DialogAsignarEmpleado
@@ -184,15 +188,6 @@ export default function VerProyectoAsignacionesEmpleados() {
 					/>
 				)
 			}
-			<Button
-				variant	= "contained"
-				color = "error"
-				disabled = { isButtonQuitarDisabled }
-				onClick = { handleQuitarButtonClick }
-				style={{ margin: '1rem' }}
-			>
-				Quitar empleado
-			</Button>
 			{
 				openQuitarDialog && (
 					<DialogQuitarEmpleado

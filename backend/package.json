@@ -6,31 +6,18 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/LuisAngeloRP/DBD-SeguimientoProyectos.git"
-  },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/LuisAngeloRP/DBD-SeguimientoProyectos/issues"
-  },
-  "homepage": "https://github.com/LuisAngeloRP/DBD-SeguimientoProyectos#readme",
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "morgan": "^1.10.0",
-    "neo4j-driver": "^5.10.0",
-    "node-fetch": "^3.3.1",
-    "pg": "^8.11.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "cassandra-driver": "*"
+    "body-parser": "^1.20.5",
+    "cassandra-driver": "^4.9.0",
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.2",
+    "morgan": "^1.11.0",
+    "pg": "^8.21.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "nodemon": "^3.1.14"
   },
   "description": ""
 }

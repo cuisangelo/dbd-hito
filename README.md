@@ -54,4 +54,4 @@ El benchmark comparó tiempos de carga y consulta con datasets de 3, 6 y 10 colu
 
 ## Nota histórica
 
-El código 2023 se conserva a propósito (sin autenticación, validaciones mínimas, estilos inline, identificadores en español). Los únicos cambios posteriores son: el modo demo con banner, la configuración por variables de entorno en el backend, la reorganización de carpetas del repo, y la actualización de dependencias dentro de los mismos majors (React 18, MUI 5, Express 4) con migración a pnpm.
+El código 2023 se conserva a propósito (sin autenticación, validaciones mínimas, estilos inline, identificadores en español). Los únicos cambios posteriores son: el modo demo con banner, la configuración por variables de entorno en el backend, la reorganización de carpetas del repo, la actualización de dependencias dentro de los mismos majors (React 18, MUI 5, Express 4) con migración a pnpm, y un refresh ligero de UI (theme global de MUI, sidebar y pantallas principales).

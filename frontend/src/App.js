@@ -15,7 +15,9 @@ import Progreso from "./components/progreso";
 import PlanifivsReportado from "./components/planivsRepo";
 import PresupuestoxProy from "./components/presuxPro";
 import ReporteRecursos from "./components/reporteRecur";
-import { Container, Box } from "@mui/material";
+import { Container, Box, CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./theme";
 import NavBarra from "./components/navBarra";
 import VistaGasto from "./components/vistaGasto";
 import VistaPresupuesto from "./components/vistaPresupuesto";
@@ -25,11 +27,13 @@ import TareasCas from "./components/VistaDetallesTareaCas";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <DemoBanner />
-      <Box sx={{ display: "flex", minHeight: "100vh" }}>
-        <NavBarra />
-        <Container maxWidth="lg">
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <BrowserRouter>
+        <DemoBanner />
+        <Box sx={{ display: "flex", minHeight: "100vh" }}>
+          <NavBarra />
+          <Container maxWidth="lg" sx={{ pb: 6 }}>
           <Routes>
             <Route path="/" element={<Navigate to="/lista-proyectos" replace />} />
             // Proyecto:
@@ -81,8 +85,9 @@ export default function App() {
             <Route path="/repRecurso/:id" element={<ReporteRecursos />} />
             <Route path="/sobrantes/:id" element={<ReporteRecursos />} />
           </Routes>
-        </Container>
-      </Box>
-    </BrowserRouter>
+          </Container>
+        </Box>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }

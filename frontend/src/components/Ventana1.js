@@ -1,27 +1,34 @@
 import React from "react";
 import {
-  Typography,
-  TextField,
-  IconButton,
-  Drawer,
+  Box,
   Button,
-  List,
-  ListItem,
-  ListItemText,
+  Container,
   Divider,
+  IconButton,
+  List,
+  ListItemButton,
+  ListItemText,
+  Paper,
+  TextField,
+  Typography,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import Logo from "./fotoTech.jpeg";
 import { Link } from "react-router-dom";
+
+const REPORTES = [
+  { label: "Presupuesto", to: (id) => `/presuxpro/${id}` },
+  { label: "Objetivos", to: (id) => `/objetivos/${id}` },
+  { label: "Planificado vs Reportado", to: () => "/planifivsRepor/1/2" },
+  { label: "Horas de empleado por proyecto", to: (id) => `/empleadoxProy/${id}` },
+  { label: "Tareas por proyecto", to: (id) => `/tareas/${id}` },
+  { label: "Recursos", to: (id) => `/repRecurso/${id}` },
+  { label: "Progreso", to: (id) => `/progreso/${id}` },
+];
 
 export default function Ventana1() {
   const [selectedProjectId, setSelectedProjectId] = React.useState(null);
   const [showProjects, setShowProjects] = React.useState(false);
   const [projects, setProjects] = React.useState([]);
-
-  const projectItemStyle = {
-    color: "dark",
-  };
 
   const cargarProyectos = async () => {
     try {
@@ -44,187 +51,71 @@ export default function Ventana1() {
     setSelectedProjectId(projectId);
   };
 
+  const selectedProject = projects.find(
+    (p) => p.proyecto_id === selectedProjectId
+  );
+
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
-      <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-        <div
-          style={{
-            backgroundColor: "#d9d9d9",
-            padding: "30px",
-            marginRight: "30px",
-            marginTop: "150px",
-            borderRadius: "2%",
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "#d9d9d9",
-              padding: "15px",
-              marginRight: "600px",
-            }}
-          >
-            <Typography variant="h4">Reportes</Typography>
-            <div
-              style={{
-                backgroundColor: "#ffffff",
-                padding: "20px",
-                marginTop: "10px",
-                borderRadius: "0.5%",
-              }}
-            >
-              <Typography variant="h5">Informes por proyecto</Typography>
-              <Typography variant="subtitle1">Seleccionar Proyectos</Typography>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginTop: "10px",
-                }}
-              >
-                <TextField
-                  label="Buscar proyectos"
-                  variant="outlined"
-                  fullWidth
-                />
-                <IconButton onClick={handleToggleProjects}>
-                  <KeyboardArrowDownIcon />
-                </IconButton>
-              </div>
-              {showProjects && (
-                <List>
-                  {projects.map((project) => (
-                    <ListItem
-                      button
-                      key={project.proyecto_id}
-                      onClick={() => handleSelectProject(project.proyecto_id)}
-                      style={
-                        project.proyecto_id === selectedProjectId
-                          ? { backgroundColor: "#e0e0e0" }
-                          : null
-                      }
-                    >
-                      <ListItemText
-                        primary={project.nombre_proyecto}
-                        style={projectItemStyle}
-                      />
-                    </ListItem>
-                  ))}
-                </List>
-              )}
-            </div>
-          </div>
-          <hr
-            style={{
-              backgroundColor: "black",
-              height: "6px",
-              border: "none",
-              margin: 0,
-              marginTop: "10px",
-            }}
+    <Container>
+      <Typography variant="h4" sx={{ mt: 4 }}>
+        Reportes
+      </Typography>
+      <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+        Informes gerenciales por proyecto
+      </Typography>
+
+      <Paper sx={{ p: 3 }}>
+        <Typography variant="h6">Informes por proyecto</Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          Selecciona un proyecto para habilitar los reportes
+        </Typography>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <TextField
+            label="Proyecto seleccionado"
+            variant="outlined"
+            fullWidth
+            value={selectedProject ? selectedProject.nombre_proyecto : ""}
+            InputProps={{ readOnly: true }}
+            placeholder="Ninguno"
           />
-          <Typography variant="h6">Generar Reportes</Typography>
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              marginTop: "20px",
-              marginBottom: "80px",
-            }}
-          >
+          <IconButton onClick={handleToggleProjects} color="primary">
+            <KeyboardArrowDownIcon />
+          </IconButton>
+        </Box>
+        {showProjects && (
+          <List>
+            {projects.map((project) => (
+              <ListItemButton
+                key={project.proyecto_id}
+                selected={project.proyecto_id === selectedProjectId}
+                onClick={() => handleSelectProject(project.proyecto_id)}
+                sx={{ borderRadius: 2 }}
+              >
+                <ListItemText primary={project.nombre_proyecto} />
+              </ListItemButton>
+            ))}
+          </List>
+        )}
+
+        <Divider sx={{ my: 3 }} />
+
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          Generar reportes
+        </Typography>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
+          {REPORTES.map((reporte) => (
             <Button
+              key={reporte.label}
               variant="contained"
               component={Link}
-              to={`/presuxpro/${selectedProjectId}`}
-              style={{
-                marginBottom: "25px",
-                marginRight: "20px",
-                backgroundColor: "black",
-              }}
-              disabled={!selectedProjectId} // Deshabilitar el botón si no hay un proyecto seleccionado
+              to={reporte.to(selectedProjectId)}
+              disabled={!selectedProjectId}
             >
-              Presupuesto
+              {reporte.label}
             </Button>
-            <Button
-              variant="contained"
-              component={Link}
-              to={`/objetivos/${selectedProjectId}`}
-              style={{
-                marginBottom: "25px",
-                marginRight: "20px",
-                backgroundColor: "black",
-              }}
-              disabled={!selectedProjectId} // Deshabilitar el botón si no hay un proyecto seleccionado
-            >
-              Objetivos
-            </Button>
-            <Button
-              variant="contained"
-              component={Link}
-              to={`/planifivsRepor/1/2`}
-              style={{
-                marginBottom: "25px",
-                marginRight: "20px",
-                backgroundColor: "black",
-              }}
-              disabled={!selectedProjectId} // Deshabilitar el botón si no hay un proyecto seleccionado
-            >
-              Planificado vs Reportado
-            </Button>
-            <Button
-              variant="contained"
-              component={Link}
-              to={`/empleadoxProy/${selectedProjectId}`}
-              style={{
-                marginBottom: "25px",
-                marginRight: "20px",
-                backgroundColor: "black",
-              }}
-              disabled={!selectedProjectId} // Deshabilitar el botón si no hay un proyecto seleccionado tengo sueño
-            >
-              Horas de empleado por proyecto
-            </Button>
-            <Button
-              variant="contained"
-              component={Link}
-              to={`/tareas/${selectedProjectId}`}
-              style={{
-                marginBottom: "25px",
-                marginRight: "20px",
-                backgroundColor: "black",
-              }}
-              disabled={!selectedProjectId} // Deshabilitar el botón si no hay un proyecto seleccionado
-            >
-              Tareas por proyecto
-            </Button>
-            <Button
-              variant="contained"
-              component={Link}
-              to={`/repRecurso/${selectedProjectId}`}
-              style={{
-                marginBottom: "25px",
-                marginRight: "10px",
-                backgroundColor: "black",
-              }}
-              disabled={!selectedProjectId} // Deshabilitar el botón si no hay un proyecto seleccionado
-            >
-              Recursos
-            </Button>
-            <Button
-              variant="contained"
-              component={Link}
-              to={`/progreso/${selectedProjectId}`}
-              style={{
-                marginBottom: "25px",
-                marginRight: "10px",
-                backgroundColor: "black",
-              }}
-              disabled={!selectedProjectId} // Deshabilitar el botón si no hay un proyecto seleccionado
-            >
-              Progreso
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
+          ))}
+        </Box>
+      </Paper>
+    </Container>
   );
 }

@@ -33,7 +33,7 @@ export default function DemoBanner() {
         position: "sticky",
         top: 0,
         zIndex: 1200,
-        height: "2.75rem",
+        height: "2.5rem",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -42,13 +42,15 @@ export default function DemoBanner() {
         fontSize: "0.8125rem",
         fontWeight: 500,
         letterSpacing: "0.01em",
-        color: "#f4f4f5",
+        color: "#d4d4d8",
         backgroundColor: "#09090b",
+        borderBottom: "1px solid rgba(255,255,255,0.1)",
         overflow: "hidden",
       }}
     >
       <div
         aria-hidden="true"
+        className="demo-banner-flow"
         style={{
           position: "absolute",
           inset: 0,
@@ -57,16 +59,48 @@ export default function DemoBanner() {
           WebkitMaskImage: maskImage,
           maskComposite: "intersect",
           WebkitMaskComposite: "source-in",
-          animation: "demo-banner-flow 20s linear infinite",
+          animation: "demo-banner-flow 9s linear infinite",
           backgroundImage: `repeating-linear-gradient(70deg, ${gradientStops})`,
           backgroundSize: "200% 100%",
         }}
       />
-      <style>{`@keyframes demo-banner-flow { from { background-position: 0% 0; } to { background-position: 100% 0; } }`}</style>
-      <span style={{ position: "relative" }}>
-        🧪 Hito · maqueta académica (Diseño de Bases de Datos, 2023) — demo con
-        datos ficticios: los cambios no se guardan.
-      </span>
+      <style>{`
+        @keyframes demo-banner-flow { from { background-position: 0% 0; } to { background-position: 100% 0; } }
+        @keyframes demo-dot-pulse {
+          0% { box-shadow: 0 0 0 0 rgba(34,200,230,0.55); }
+          70% { box-shadow: 0 0 0 6px rgba(34,200,230,0); }
+          100% { box-shadow: 0 0 0 0 rgba(34,200,230,0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .demo-banner-flow, .demo-dot { animation: none !important; }
+        }
+      `}</style>
+      <div
+        style={{
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
+          gap: "0.625rem",
+        }}
+      >
+        <span
+          aria-hidden="true"
+          className="demo-dot"
+          style={{
+            width: 6,
+            height: 6,
+            borderRadius: 9999,
+            backgroundColor: "#22c8e6",
+            animation: "demo-dot-pulse 2s ease-out infinite",
+          }}
+        />
+        <span>
+          <span style={{ fontWeight: 600, color: "#f4f4f5" }}>
+            Entorno de demostración
+          </span>{" "}
+          · datos simulados, solo de referencia. Los cambios no se guardan.
+        </span>
+      </div>
       <button
         type="button"
         aria-label="Cerrar aviso"

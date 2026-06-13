@@ -56,16 +56,33 @@ export default function NavBarra() {
               key={item.to}
               onClick={() => navigate(item.to)}
               sx={{
+                position: "relative",
                 borderRadius: 2,
                 mb: 0.5,
                 color: selected ? "#ffffff" : "rgba(255,255,255,0.7)",
                 backgroundColor: selected
-                  ? "rgba(54,169,220,0.25)"
+                  ? "rgba(34,200,230,0.16)"
                   : "transparent",
+                transition: "background-color 120ms ease, color 120ms ease",
                 "&:hover": { backgroundColor: "rgba(255,255,255,0.08)" },
+                "&::before": {
+                  content: '""',
+                  position: "absolute",
+                  left: 0,
+                  top: 8,
+                  bottom: 8,
+                  width: 3,
+                  borderRadius: 3,
+                  backgroundColor: "#22c8e6",
+                  opacity: selected ? 1 : 0,
+                  boxShadow: selected ? "0 0 10px rgba(34,200,230,0.8)" : "none",
+                  transition: "opacity 120ms ease",
+                },
               }}
             >
-              <ListItemIcon sx={{ color: "inherit", minWidth: 38 }}>
+              <ListItemIcon
+                sx={{ color: selected ? "#22c8e6" : "inherit", minWidth: 38 }}
+              >
                 {item.icon}
               </ListItemIcon>
               <ListItemText
